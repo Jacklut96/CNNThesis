@@ -1,5 +1,0 @@
-**Idee buttate a caso per SoA**
-
-- As of today imaging techniques as Computer Tomography (CT) and Positron Emition Tomography (PET) are becoming more and more of a standard in performing diagnosis in patients which are suspected (or are already confirmed) to have lung cancer. Time, as stated beforehand, is a critical factor in lung cancer diagnosis and the use of screening techniques like the ones already mentioned has proved to improve the amount of lung nodules and lung cancers detected at early stages (compared to chest radiography). 
-
-- In recent times the field of medical imaging analysis and data extraction, known as Radiomics, has proven out to be fundamental in improving decision making and diagnosis, thus allowing for a [better prevention and identification of diseases]. The concept of extracting features and 
