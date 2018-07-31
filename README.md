@@ -1,3 +1,3 @@
 # CNNThesis
 
-#Download Tesi CNN.rar e sostituisci all'interno di esso i files che trovi fuori. Compila il file main.tex con SublimeText3 + LatexTools per ottenere il pdf.
+#Clona o scarica lo .zip del master e all'interno di Tesi-CNN.rar sostituisi i capitoli che appartengono al nostro lavoro. Dopo aver scaricato il compilatore LaTeX dal loro sito, compila il main.tex con Sublime e LaTexTools (plug-in da installare in Sublime) e enojy. 
