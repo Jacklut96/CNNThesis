@@ -3,9 +3,51 @@
 \label{stateofart}
 \thispagestyle{empty}
 
-Amongst the different types of cancer, Lung Cancer stands out as one of the most common and the deadliest of them all, causing almost 1.6 million deaths every year on a global basis.\cite{Wasserman2015} When detected in later stages (III - IV) it's almost always considered unoperable and almost no therapy will prove successfull. Only less than 5\% of people diagnosed with lung cancer survive for more than 10 years, but it has been proved that detecting it at earlier stages (I and II) leads to drastic augments in survaivablity rates,\cite{CancerResearchUK} as it becomes possible to perform possibly effective therapies. Thus comes the need of being able to detect lung cancer as soon as possible, meanwhile differentiating between benign and malignant nodules in order to provide the best possibile treatment to the patient. Imaging techniques as Computer Tomography (CT) and Positron Emition Tomography (PET) are becoming, as of today, more and more of a standard as aiding tools to radiologists in performing diagnosis in patients which are suspected (or are already confirmed) to have lung cancer.\cite{Indicators2017} Time, as stated beforehand, is a critical factor in lung cancer diagnosis and the use of screening techniques like the ones already mentioned has proved to improve the amount of lung nodules and lung cancers detected at early stages (compared to chest radiography).\cite{AlMohammad2017} Despite the usage of CT and PET, though, time still comes as a scarce resource for radiologists, and the possibility of committing mistakes is always present. A nodule might come by undetected by the human eye if too small or well hid in proximity of the rib cage, whilst a bening nodule might be exchanged for a malignant or viceversa. It is then pretty much obivious the necessity of Computer Aided Detection (CAD) in providing new faster and more precise ways to perform diagnosis. Where aided by CAD systems, radiologists show less diagnostic errors and false negatives, also being more accurate than a single or even a double radiologist reading.\cite{AlMohammad2017} The concept of CAD is based on the conversion of medical images in data which can be mined, analyzed and combined with already acquired knowledge in order to provide support for decision making in medicine. This process, known as \textit{Radiomics}, allows for the extraction of features from images and their subsequent analisys, hence allowing for the developing of models with the potential to improve the accuracy of diagnosis and prognosis.\cite{Gillies2016} 
+\begin{figure}[b]
+\caption{Respectively a CT and a PET scan}
+\centering
+\includegraphics[width=\textwidth]{ctpet}
+\label{ctpet}
+\end{figure}
+
+\begin{figure}[b]
+\caption{(A) Original Image (B) Example of Gabor Filter. \cite{Chaudhary2012}}
+\centering
+\includegraphics{imageprocess}
+\label{imageprocess}
+\end{figure}
+
+Amongst the different types of cancer, Lung Cancer stands out as one of the most common and the deadliest of them all, causing almost 1.6 million deaths every year on a global basis.\cite{Wasserman2015} When detected in later stages (III - IV) it's almost always considered unoperable and almost no therapy will prove successfull. Only less than 5\% of people diagnosed with lung cancer survive for more than 10 years, but it has been proved that detecting it at earlier stages (I and II) leads to drastic augments in survaivablity rates,\cite{CancerResearchUK} as it becomes possible to perform possibly effective therapies. Thus comes the need of being able to detect lung cancer as soon as possible, meanwhile differentiating between benign and malignant nodules in order to provide the best possibile treatment to the patient. Imaging techniques as Computer Tomography (CT) and Positron Emition Tomography (PET) \textit{(Figure \ref{ctpet})} are becoming, as of today, more and more of a standard as aiding tools to radiologists in performing diagnosis in patients which are suspected (or are already confirmed) to have lung cancer.\cite{Indicators2017} Time, as stated beforehand, is a critical factor in lung cancer diagnosis and the use of screening techniques like the ones already mentioned has proved to improve the amount of lung nodules and lung cancers detected at early stages (compared to chest radiography).\cite{AlMohammad2017} Despite the usage of CT and PET, though, time still comes as a scarce resource for radiologists, and the possibility of committing mistakes is always present. A nodule might come by undetected by the human eye if too small or well hid in proximity of the rib cage, whilst a bening nodule might be exchanged for a malignant or viceversa. It is then pretty much obivious the necessity of Computer Aided Detection (CAD) in providing new faster and more precise ways to perform diagnosis. Where aided by CAD systems, radiologists show less diagnostic errors and false negatives, also being more accurate than a single or even a double radiologist reading.\cite{AlMohammad2017} The concept of CAD is based on the conversion of medical images in data which can be mined, analyzed and combined with already acquired knowledge in order to provide support for decision making in medicine. This process, known as \textit{Radiomics}, allows for the extraction of features from images and their subsequent analisys, hence allowing for the developing of models with the potential to improve the accuracy of diagnosis and prognosis.\cite{Gillies2016} 
 \vspace{5mm}
 \section{Radiomics}
 Radiomics allows to detect large datasets, containing huge amounts of data, and extract valuable information frome those datas. Informations, in the field of lung cancer detection, refer to features and characteristics of nodules: shape, position, intensity, texture, wavelet, etc. are all features which can be extracted from medical images and analyzed in order to obtain support in decision making. \cite{Chen2017} As of today radiologists manually identify, on every single CT slice (from 256 to more than 400 CT slices per patient), a \textit{Region of Interest (ROI)}, containing the supposed nodule. Such ROI will then be analyzed and on it feature extraction will be performed. This process, though, turns out to be extremely tedious and time consuming for radiologist, providing us with an extremely important problem: to find an automatized way to perform lung nodules detection. 
+\vspace{5mm}
+\subsection{Image Processing}
+Image processing is a method which consists in performing operations on an image in order to get an enhanced version of it from which it will be possible to extract valuable informations. Such operations are performed by means of computer algorithms, which allows for such a method to be considered automathized, as it will respect the concepts of: Standardization, repeatablity, reproducibility etc.
+In our specific field of interest image processing is one of the most used methods (if not actually the first) to perform feature extraction. Both PET and CT scans can be used to such a purpose, each one with its own pros and cons:
+\begin{itemize}
+	\item PET: With its high contrast makes it way easier to find nodules and being able to determinate the stage of tumors, but it requires the usage of radioactive materials as the likes of Fluro deoxy-glucose (FDG)
+	\item CT: Cleaner images with low contrast. It is harder to distinguish sane tissue from cancerous tissue, but they're cheaper to acquire and are not potentially harmful to the human body.
+\end{itemize}
+
+Considering these aspects it is clear how many studies prefer the usage of CT images and work on making the features extracted from those images as valuable as possible. 
+Every work uses its own steps in performing image processing, each and every step personally optimized in order to improve the efficiency of the proposed system, but it is possible to identify a few fundamental steps which are common to most of the works we analyzed. \cite{Khan2015,Chaudhary2012, LogeshKumar2016, Amutha2013, Mu, Punithavathy2015}
+
+\begin{enumerate}
+	\item Pre-Processing: In this step two different kinds of processes are applied in order to prepare the image for following works.
+	\begin{itemize}
+		\item Image Enhancing: Scaling, greyscale level adaptation, contrast, smoothing, etc. There is no standard for a "good" enhanced image, thus the applied filters and their specifics vary from work to work. \textit{Figure \ref{imageprocess}}
+		\item Image Segmentation: This is a critical step, depending on its success the whole process of image processing and feature extraction might be a failure or a success. By applying filters, usually Thresholding and Waterhsed, the image is segmentated and only fragments which contain valuable informations are left \textit{(i.e. detected lung nodules)}.
+	\end{itemize}
+	\item Feature Extraction: The input data is now transformed, by means of various algorithms, into analyzable data. Even here the extracted features are depending on the subject work, but it is possible to identify a few standard features which are almost always extracted:
+	\begin{itemize}
+		\item Area: Number of pixels which compose the segmented zone.
+		\item Perimeter: Number of the outline of of nodule pixel.
+		\item Roundness: Parameter of circularity, with 1 considered as perfect roundness.
+	\end{itemize}
+\end{enumerate}
+
+Only a few works, like \textit{Chaudary et Al.}\cite{Chaudhary2012}, also perform \textbf{Classification} of the found nodules, identifying benign and malignant ones.
+Even though it is usually really cost-efficient to apply such processes, and the accuracy of the predictions are quite high, there are also drawbacks. One of the most problematic ones is the detection of small and juxtaproximal lung nodules, which are at risk of being excluded due to being identified as part of the parenchyma itself during the \textit{Segmentation} phase. Thus comes the need of a more sensible and precise technique for image processing, able to learn from its mistakes. 
 
 \end{document}
