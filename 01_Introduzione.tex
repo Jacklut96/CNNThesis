@@ -10,9 +10,14 @@ The human evaluation of lung nodules can introduce many errors related to the ne
 it has to be highlighted the necessity of an early diagnosis that allows a radical and targeted therapeutic approach before invasion of the  surrounding structures by the tumor with the patient's clinical cure.
 \vspace{5mm}
 
-Our project exploits the ability to analyze imagins of the CNN to produce an almost immediate evaluation of the patient exam.
+Our project exploits the ability of CNNs to analyze imagines to produce an almost immediate evaluation of the patient exam.
 
 \section{Proposed solution}
+The CNNs are widely used for recognizing objects in images, in the state of the art there is no mention of the use of this architecture for lung cancer detection so our aim is to introduce a new effective method to speed up diagnostics.
+We want to build an algorithm that takes in imput all the images from a CT exam of a patient and gives as output the location in terms of number of slice of a lung nodule.
 
+\subsection{CNN principles}
+Convolutional Neural Networks are made up of neurons that have learnable weights and biases, each neuron receives inputs and performs a dot product. The network produce a score function: from the raw image pixels to class scores. 
+Neural Network to work properly has to be trained: a process in which the net works with images which are already classified in order to make the network capable of modifying its weights based on the type of images it will receive and the classification that have to perform.
 \vspace{5mm}
 \end{document}
