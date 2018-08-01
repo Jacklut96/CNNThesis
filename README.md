@@ -12,6 +12,7 @@ Requisiti per compilare: Sublime Text 3 + LatexTools (da installare mediante Pac
 - Il file su cui si è scritto (es. 02_SoA)
 - Il file SoA.bib aggiornato con le citazioni utilizzate (carica gli articoli sul gruppo in Mendeley e da lì genera il file .bib (https://blog.mendeley.com/2011/10/25/howto-use-mendeley-to-create-citations-using-latex-and-bibtex/)
 - La cartella Immagini contenente ANCHE le nuove immagini
+*IMPORTANTE:* Tutto ciò che viene caricato deve avere lo stesso nome di quando viene scaricato! (scarico lo zip Immagini? Caricherò uno zip che si chiama Immagini con tutte le immagini vecchie e nuove). Questo vale sia per le cartelle che per i file singoli!
 
 2.a) Come metto le nuove immagini nella cartella?
 - Scarica la cartella Immagini e unzippala
