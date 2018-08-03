@@ -20,4 +20,9 @@ We want to build an algorithm that takes in imput all the images from a CT exam 
 Convolutional Neural Networks are made up of neurons that have learnable weights and biases, each neuron receives inputs and performs a dot product. The network produce a score function: from the raw image pixels to class scores. 
 Neural Network to work properly has to be trained: a process in which the net works with images which are already classified in order to make the network capable of modifying its weights based on the type of images it will receive and the classification that have to perform.
 \vspace{5mm}
+
+\subsection{.dicom files}
+Medical images or more in general medical datas have to adhere to a standard, this standard ensures that all medical exams and patient information can be read in the same way by anyone. This standard is Digital Imaging and Communications in Medicine (DICOM), it provides a standard for the communication and management of medical imaging information and related data.
+About medical imaging and related data, the CT images, with which our work refears, are related with a header which provide all the information about patient and technical details on the methods of examination. In the header there are information about machinaries, size, padding values, high bit of aquisition and the pixel array of images; this allaw to implement the right changes to the images in order to provide to the network files of the same type with identical characteristics.
+\vspace{5mm}
 \end{document}
