@@ -1,28 +1,28 @@
 \documentclass[../main.tex]{subfiles}
 \begin{document}
 \thispagestyle{empty}
-This document contains the documentation of the "Convolutional Neural Network (CNN) for Lung Cancer Detection" project. This Chapter introduces the problem which this project aims to provide a solution through CNN and their develop.
+This document contains the documentation of the "Convolutional Neural Network (CNN) for Lung Cancer Detection" project. This project aims to provide a solution to the problem introduced in this chapter through CNN and their develop.
 
 \section{Context and problem definition}
 The Convolutional Neural Network is ment to be employed in diagnostic to overcome the presence of human errors in the valuation of CT and PET images. Furthermore, it proposes a more exact and effective solution in less time and it reduces the work load of the radiologist.
-the lung cancer is a uncontrolled and invasive growth of tissue, it begins with small nodule in the peripheral part of the lung where it is also site of inflammatory processes (bronchitis, pneumonia); if it is not detected in early stage, the nodule increases in volume and invades the near structures (pleura and mediastinum). Malignant pulmonary nodules, in early stage, has net contours and easily indistinguishable from inflammatory outcomes. This volume growth vaniches any termination surgical therapy.
-The human evaluation of lung nodules can introduce many errors related to the need to provide an evaluation as quikly as possible because of the large amount of images per patient to analyze, of the diffivulty to detect the small tumoral masses not completely vascularized with a low glucose metabolism and reduced captation of contrast medium.
-it has to be highlighted the necessity of an early diagnosis that allows a radical and targeted therapeutic approach before invasion of the  surrounding structures by the tumor with the patient's clinical cure.
+Lung cancer is a uncontrolled and invasive growth of tissue: it begins with a small nodule in the peripheral part of the lung. the peripheral area is also site of inflammatory processes such as bronchitis, pneumonia; if it is not detected in early stages, the nodule increases in volume and invades the near structures (pleura and mediastinum). Malignant pulmonary nodules, in early stages, have net contours and easily indistinguishable from inflammatory outcomes. This volume growth vaniches any termination surgical therapy.
+The human evaluation of lung nodules can introduce many errors related to the need to provide an evaluation as quickly as possible because of the large amount of images per patient to analyze, of the difficulty to detect the small tumoral masses not completely vascularized with a low glucose metabolism and reduced captation of contrast medium.
+The necessity of an early diagnosis that allows a radical and targeted therapeutic approach it has to be highlighted before the invasion of the  surrounding structures by the tumor with the patient's clinical cure.
 \vspace{5mm}
 
-Our project exploits the ability of CNNs to analyze imagines to produce an almost immediate evaluation of the patient exam.
+Our project, thanks to the ability of CNNs to analyze images, aims to produce an almost immediate evaluation of the patient's exam.
 
 \section{Proposed solution}
-The CNNs are widely used for recognizing objects in images, in the state of the art there is no mention of the use of this architecture for lung cancer detection so our aim is to introduce a new effective method to speed up diagnostics.
-We want to build an algorithm that takes in imput all the images from a CT exam of a patient and gives as output the location in terms of number of slice of a lung nodule.
+The CNNs are widely used for recognizing objects in images: in the state of the art there is no mention of the use of this architecture for lung cancer detection so our aim is to introduce a new effective method to speed up diagnostics.
+Our purpose is to build an algorithm that takes in imput all the images from a CT exam of a patient and gives as output the location in terms of number of slices of a lung nodule.
 
 \subsection{CNN principles}
-Convolutional Neural Networks are made up of neurons that have learnable weights and biases, each neuron receives inputs and performs a dot product. The network produce a score function: from the raw image pixels to class scores. 
-Neural Network to work properly has to be trained: a process in which the net works with images which are already classified in order to make the network capable of modifying its weights based on the type of images it will receive and the classification that have to perform.
+Convolutional Neural Networks are made up of artificial neurons that have learnable weights and biases, each neuron receives inputs and performs a dot product. The network produces a score function: from the raw image pixels to class scores. 
+Neural Network has to be trained to work properly. The training, consists of a process in which the net works with images already classified, in order to make the network capable of modifying its weights based on the type of images. Thanks to this training, the net can fully operate the right classification on new images.
 \vspace{5mm}
 
 \subsection{.dicom files}
-Medical images or more in general medical datas have to adhere to a standard, this standard ensures that all medical exams and patient information can be read in the same way by anyone. This standard is Digital Imaging and Communications in Medicine (DICOM), it provides a standard for the communication and management of medical imaging information and related data.
-About medical imaging and related data, the CT images, with which our work refears, are related with a header which provide all the information about patient and technical details on the methods of examination. In the header there are information about machinaries, size, padding values, high bit of aquisition and the pixel array of images; this allaw to implement the right changes to the images in order to provide to the network files of the same type with identical characteristics.
+Medical images or more in general medical datas have to be standardized in order to read all medical exams and patient information in the same way by anyone. This standard is Digital Imaging and Communications in Medicine (DICOM), it provides a standard for the communication and management of medical imaging information and related data.
+About medical imaging and related data, the CT images are related with a header which provide all the information about patient and technical details on the methods of examination. In the header there are information about machinaries, size, padding values, high bit of aquisition and the pixel array of images; this allow to implement the right changes to the images in order to provide to the network files of the same type with identical characteristics.
 \vspace{5mm}
 \end{document}
