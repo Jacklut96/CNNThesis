@@ -5,15 +5,19 @@ import time
 import csv
 import png
 import cv2
+from sklearn.utils import shuffle
+import scipy
 '''
 HOW TO:
 1- Choose the folder destination for lungs (destlung) and not lungs (destnot). These MUST be subfolders of the same folder.
 1.a - If you're using Windows use \\ for path steps
 2- Choose pixels.csv (pixelfile) and labels.csv (labelfile)
-3- Let the magic happen
+3- Chose dataset dimension (datanum)
 '''
 destlung ='D:\\Emanuele\\Progetto\\Proverino\\piennegi\\lungs'
 destnot ='D:\\Emanuele\\Progetto\\Proverino\\piennegi\\notlungs'
+
+datanum = 200
 
 with open ('D:\Emanuele\Progetto\Proverino\minidata.csv', newline='') as pixelfile:
     pixel_reader = csv.reader(pixelfile)
@@ -33,6 +37,7 @@ with open ('D:\Emanuele\Progetto\Proverino\minilabel.csv', newline='') as labelf
 
 labels = np.array(label_data)
 labels = labels.astype(int)
+img, label = shuffle(pixel_data, labels, random_state=2)
 lungcount=0
 notcount=0
 for i in range(len(pixels)):
@@ -47,12 +52,14 @@ for i in range(len(pixels)):
     res = np.uint8(res)
     #resized.append(res)
     if lab==1:
-        lungcount+=1
-        with open((destlung + "\lungs" + "%s" %lungcount +".png"), 'wb') as png_file:
-            w = png.Writer(140, 140, greyscale=True)
-            w.write(png_file, res)
+    	lungcount+=1
+    	if lungcount<=datanum/2:
+    		with open((destlung + "\\lungs" + "%s" %lungcount +".png"), 'wb') as png_file:
+    			w = png.Writer(140, 140, greyscale=True)
+    			w.write(png_file, res)
     else:
-        notcount+=1
-        with open((destnot + "\\not" + "%s" %notcount +".png"), 'wb') as png_file:
-            w = png.Writer(140, 140, greyscale=True)
-            w.write(png_file, res)
+    	notcount+=1
+    	if notcount<=datanum/2:
+    		with open((destnot + "\\not" + "%s" %notcount +".png"), 'wb') as png_file:
+    			w = png.Writer(140, 140, greyscale=True)
+    			w.write(png_file, res)
