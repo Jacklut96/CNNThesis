@@ -1,0 +1,31 @@
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+\thispagestyle{empty}
+\section{Image Data Pre-Processing for Neural Networks}
+Deep learning has truly come into the mainstream in the past few years. Deep learning uses neural nets with a lot of hidden layers (dozens in today’s state of the art), and requires large amounts of training data. These models have been particularly effective in gaining insight and approaching human level accuracy in perceptual tasks like vision, speech, language processing. The theory and mathematical foundations were laid several decades ago. Primarily two phenomena have contributed to the rise of machine learning a) Availability of huge data-sets/training examples in multiple domains and b) Advances in raw compute power and the rise of efficient parallel hardware.
+
+Building an effective neural network model requires careful consideration of the network architecture as well as the input data format. The most common image data input parameters are the number of images, image height, image width, number of channels, and number of levels per pixel. Typically we have 3 channels of data corresponding to the colors Red,Green, Blue (RGB) Pixel levels are usually [0,255].
+
+Data-set images need to be converted into the described format. After downloading the image data, notice that the images are arranged in separate sub-folders, by name of the person. We’ll need to get all the photos into a common directory for this exercise. Lets take the first 100 images and copy them into a working directory. The data contains faces of people ‘in the wild’, taken with different light settings and rotation. They to appear to have been centered in this data set, though this need not be the case.
+
+
+There are a number of pre-processing steps we might wish to carry out before using this in any Deep Learning project. The paragraphs below list some of the most common.
+
+Uniform aspect ratio: One of the first steps is to ensure that the images have the same size and aspect ratio. Most of the neural network models assume a square shape input image, which means that each image need to be checked if it is a square or not, and cropped appropriately. Cropping can be done to select a square part of the image. While cropping, we usually care about the part in the center.
+
+
+%Back to our data-set. Sampling a few pictures randomly we see each image in the data-set appears to have dimensions of 250 by 250 pixels, which does simplify things.
+
+
+Image Scaling: Once we’ve ensured that all images are square (or have some predetermined aspect ratio), it’s time to scale each image appropriately. There are a wide variety of up-scaling and down-scaling techniques and we usually use a library function to do this for us.
+
+
+Normalizing image inputs: Data normalization is an important step which ensures that each input parameter (pixel, in this case) has a similar data distribution. This makes convergence faster while training the network. Data normalization is done by subtracting the mean from each pixel, and then dividing the result by the standard deviation. The distribution of such data would resemble a Gaussian curve centered at zero. For image inputs we need the pixel numbers to be positive, so we might choose to scale the normalized data in the range [0,1] or [0, 255]. 
+
+Dimensionality reduction: We could choose to collapse the RGB channels into a single gray-scale channel. There are often considerations to reduce other dimensions, when the neural network performance is allowed to be invariant to that dimension, or to make the training problem more tractable.
+
+
+Data augmentation: Another common pre-processing technique involves augmenting the existing data-set with perturbed versions of the existing images. Scaling, rotations and other affine transformations are typical. This is done to expose the neural network to a wide variety of variations. This makes it less likely that the neural network recognizes unwanted characteristics in the data-set.
+\cite{multi}
+\vspace{5mm}
+\end{document}
