@@ -1,39 +1,46 @@
 \documentclass[../main.tex]{subfiles}
 \begin{document}
 \thispagestyle{empty}
-This document contains the documentation of the "Convolutional Neural Network (CNN) for " project. This project aims to provide a solution to the problem introduced in this chapter through CNN and their develop.
+The following dissertation contains the documentation of the "Convolutional Neural Networks for Anatomic Site Recognition" project. 
+This project aims to provide an effective method to retrieve anatomically relevant images from a complete CT scan of a patient, in order to provide an initialisation to computer-aided diagnosis (CAD) methods.
+Such processes are used in \textit{Radiomics}, which is a field of medical study that aim to extract qualitative features from medical images using data characterisation algorithms.
+Radiomics algorithms perform a segmentation of the images, recognising shapes and improving the image parameters in order to extract features that contain informations useful for a precise and quantitative classification of a certain disease (a cancer mass, for example).
 
 \section{Context and problem definition}
-The Convolutional Neural Network is ment to be employed in diagnostic to overcome the presence of human errors in the valuation of CT and PET images. Furthermore, it proposes a more exact and effective solution in less time and it reduces the work load of the radiologist.
-The cancer is a uncontrolled and invasive growth of tissue due to a somatic mutation of the DNA of a cell. This neoplastic cell stops its specific function and starts to clone itself without a limit. The continous grouth produces an agglomerated tissue that does not perforn any kind of activity which is usefull to the organanism to survive. The tissue replaces competitively the normal tissue causing the malfunction of the affected organ. This volume growth vaniches any termination surgical therapy.
+Convolutional neural networks (CNN) are  a powerful computer vision method that can be employed in CAD to overcome the presence of human errors in the valuation of CT and PET images. Furthermore, they provide a less time consuming procedure and they reduce the radiologist work load. \\
+Radiomics is crucial in cancer detection and diagnosis: a tumor is an uncontrolled and invasive growth of tissue due to a somatic mutation of the DNA of a cell. This neoplastic cell stops its specific function and starts to clone itself without a limit. The continuous growth produces an agglomerated tissue that does not perform the phisylogical activity which is useful to the organism to survive: this cancerous tissue replaces competitively the anatomical tissue causing the malfunction of the affected organ. This excessive volume growth seldom vanishes any surgical therapy possibility, which is already prohibitive every time the cancer develops inside inner body organs. 
+When detected in early stages of its growth, a tumor can be treated with chemotherapy and its development can be stopped: the role of radiomics in cancer treatment is essential.
 
-\begin{figure}[htbp] 
+\begin{figure}[!b] 
 \centering 
 \includegraphics[width=0.5\textwidth]{cancerexample}
-\caption{Liver Tumor: an example of how a tumor appear in a CT image} 
+\caption{An example of how a liver tumor appears in a CT image} 
+\source{http://www.scielo.mec.pt/scielo.php?script=sci_arttext&pid=S2341-45452015000400005}
 \label{cancerexample} 
 \vspace{5mm}
 \end{figure}
 
-The human evaluation of lung nodules can introduce many errors related to the need to provide an evaluation as quickly as possible because of the large amount of images per patient to analyze, of the difficulty to detect the small tumoral masses not completely vascularized with a low glucose metabolism and reduced captation of contrast medium.
-The necessity of an early diagnosis that allows a radical and targeted therapeutic approach it has to be highlighted before the invasion of the  surrounding structures by the tumor with the patient's clinical cure.
+%The human evaluation of lung nodules can introduce many errors related to the need to provide an evaluation as quickly as possible because of the large amount of images per patient to analyse, of the difficulty to detect the small cancerous masses not completely vascularised with a low glucose metabolism and reduced captation of contrast medium.
+%The necessity of an early diagnosis that allows a radical and targeted therapeutic approach it has to be highlighted before the invasion of the  surrounding structures by the tumor with the patient's clinical cure.
 \vspace{5mm}
 
-Nowadays, the field that implements models to identify nodules inside the human body is Radiomics: it is a field of medical study that aim to extract qualitative features from medical images using data characterisaion agorithm.
-Radiomic algorithms perform a segmentation of the images which provides the recognition of shapes and then improove the image parameters in order to extract the features. This features contains the informations which allow to get a classification and the identification of a tumor mass.
-The main problem of this approach is that each different body region needs a specific method of segmentation and feature extraction. Thus, our aim is to perform a CNN Body Region Recognition in order to provide at each algorithm the specific body region for which it was developed, so decreasing the computational times.
+% Radiomics: it is a field of medical study that aim to extract qualitative features from medical images using data characterisation algorithm.
+%Radiomic algorithms perform a segmentation of the images which provides the recognition of shapes and then improove the image parameters in order to extract the features. This features contains the informations which allow to get a classification and the identification of a tumor mass.
+The main issue of the CAD approaches is that each different body region needs a specific method of segmentation and feature extraction in order to let the software perform the correct diagnosis \cite{Yan2016}: our aim is to develop a CNN anatomical site recognition method in order to provide an initialisation step by finding specific body region for which an algorithm was developed, thus decreasing computational times.
 
 \section{Proposed solution}
-The CNNs are widely used for recognizing objects in images: in the state of the art there is no mention of the use of this architecture for lung cancer detection so our aim is to introduce a new effective method to speed up diagnostics.
-Our purpose is to build an algorithm that takes in imput all the images from a CT exam of a patient and gives as output the location in terms of number of slices of a lung nodule.
+CNNs are widely used for recognising objects in images: in the state of the art there is little mention of using these architectures in medical image processing algorithms so our aim is to introduce a new effective method to speed up the diagnosis.
+Our purpose is to build an algorithm that takes as input all the images from a CT exam of a patient and returns the desired slices containing the body site to be analysed.
 
-\subsection{CNN principles}
-Convolutional Neural Networks are made up of artificial neurons that have learnable weights and biases, each neuron receives inputs and performs a dot product. The network produces a score function: from the raw image pixels to class scores. 
-Neural Network has to be trained to work properly. The training, consists of a process in which the net works with images already classified, in order to make the network capable of modifying its weights based on the type of images. Thanks to this training, the net can fully operate the right classification on new images.
+%\subsection{CNN principles}
+%Convolutional neural networks are composed of artificial neurons that have learnable weights and biases, each neuron receives inputs and performs a dot product. The network produces a score function: from the raw image pixels to class scores. 
+%Neural Network has to be trained to work properly. The training, consists of a process in which the net works with images already classified, in order to make the network capable of modifying its weights based on the type of images. Thanks to this training, the net can fully operate the right classification on new images.
 \vspace{5mm}
 
-\subsection{.dicom files}
-Medical images or more in general medical datas have to be standardized in order to read all medical exams and patient information in the same way by anyone. This standard is Digital Imaging and Communications in Medicine (DICOM), it provides a standard for the communication and management of medical imaging information and related data.
-About medical imaging and related data, the CT images are related with a header which provide all the information about patient and technical details on the methods of examination. In the header there are information about machinaries, size, padding values, high bit of aquisition and the pixel array of images; this allow to implement the right changes to the images in order to provide to the network files of the same type with identical characteristics.
+\subsection{DICOM (.dcm) files}
+Medical images, as well as medical data, have to be standardised in order to be read in the same way by anyone, allowing repeatable experiments and uniform data. 
+The medical images standard is Digital Imaging and Communications in Medicine (DICOM): this provides a standard for the communication and management of medical imaging information and related data.
+DICOM images are composed by a \textbf{header} which provide all the technical details about the patient, exam procedure, image acquisition, hospital structure, visiting doctor, and a \textbf{.raw image file}. \\
+The header also contains information about diagnosis machineries, size of the image, padding values, highest bit of acquisition and the pixel array of the image contained in the file: this allows to implement the right changes via image processing, providing the algorithms inputs of the same type with identical characteristics.
 \vspace{5mm}
 \end{document}
