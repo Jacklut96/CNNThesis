@@ -17,6 +17,9 @@
 \usepackage[normalem]{ulem} %per barrare le parole
 \usepackage{booktabs}
 \usepackage[table]{xcolor}
+\usepackage{caption} %per aggiungere la fonte delle immagini nella descrizione senza che compaia nella "list of figures"
+\usepackage{subcaption}
+\newcommand{\source}[1]{\vspace{-6pt} \caption*{\hfil \textbf{Source:} {#1}} } %utilizzo: \source{link dell'immagine}
 
 %\usepackage{booktabs} %Migliora aspetto delle tabelle
 %\usepackage{multirow} % per unire le righe delle tabelle
@@ -31,7 +34,7 @@
 \usepackage{color}
 
 \definecolor{dkgreen}{rgb}{0,0.6,0}
-%\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
 \definecolor{mauve}{rgb}{0.58,0,0.82}
 
 \lstset{
@@ -63,7 +66,7 @@
 
 \pagenumbering{roman}
 \subfile{Chapters/Abstract}
-\subfile{Chapters/sommario}
+%\subfile{Chapters/sommario}
 \tableofcontents
 \listoffigures
 \listoftables
@@ -75,25 +78,17 @@
 \chapter{State of the Art}
 \subfile{Chapters/02_SoA}
 
-\chapter{Materials and Methods}
-\subfile{Chapters/03_1_Dataset}  
-
-%\chapter{Materials and Methods}
-%\subfile{Chapters/03_Material}  
-
-
 \chapter{Design and Implementation}
 \subfile{Chapters/04_Technical}
 
 \chapter{Results and Validation}
 \subfile{Chapters/05_Validation}
 
-
 \begin{footnotesize}
 \cleardoublepage
 \addcontentsline{toc}{chapter}{\bibname}
 \bibliographystyle{unsrt}
-\bibliography{SoA}
+\bibliography{SoA.bib}
 \end{footnotesize}
 
 \end{document}
