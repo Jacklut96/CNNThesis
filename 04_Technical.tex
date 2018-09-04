@@ -3,10 +3,17 @@
 \label{capitolo5}
 \thispagestyle{empty}
 
-The first step in the construction of a Convolutional Neural Network is definining the system on which it will be built on. Furthermore a Dataset has to be defined an built, and only then it is possibile to perform training, testing and evaluations on the trained network in order to acquire useful data used to decide wether the built architecture is functional or not. All of the following operations have been executed on a %TODO: INSERIRE SPECIFICHE DWARF
+\begin{figure}[b]
+\caption{Example of GoogleInceptionV3 Architecture}
+\centering
+\includegraphics{inceptionv3}
+\label{inceptionv3}
+\end{figure}
+
+The first step in the construction of the Convolutional Neural Network needed to perform the proposed task is definining the system on which it will be built on. Furthermore a Dataset has to be defined an built, and only then it is possibile to perform training, testing and evaluations on the trained network in order to acquire useful data used to decide wether the built architecture is functional or not. All of the following operations have been executed on a %TODO: INSERIRE SPECIFICHE DWARF
 
 \section{API}
-\textbf{Tensorflow} is our library of choice. The free open source library developed by Google Brain is excellent for machine learning purposes\cite{Tensorflow2017}, and used in combination with Python it works as the backend of our Convolutional Neural Networks. \textbf{Keras} is our API of choice: Being an high-level API it allows us to make our code easier to read, also enhancing the speed at which the whole Network works. Without the use of Keras the whole network would require much more code and would also be slower. During a preliminar test with a pre-prepared dataset and two identical architectures the usage of Keras has shown to improve the timing by a huge margin \textit{(4 hours with only Tensorflow against 20 mins ca. with Keras'API)}. 
+\textbf{Tensorflow} is a free \textbf{Python} open source library developed by Google Brain, which is excellent for machine learning purposes\cite{Tensorflow2017} and gives all the needed parts to build a Convolutional Neural Network. As its performance is on comparison if not better than other competitors in the market like Caffe and Theano, also due to the fact that the Tensorflow Documentation is easily understandable, it is constantly updated and is, basically, the current State of the Art in Machine Learning Frameworks; we've decided to use it as the backend of our Convolutional Neural Networks. \textbf{Keras}, furthermore, is our API \textit{(Application Programming Interface)} of choice: Like any other high-level API, Keras' usefulness is in giving easier and more user-friendly ways to code, thus making our code easier to read. It also enhances the speed at which the whole Network works. Without the use of Keras the whole network would require much more code, be less understandable and also extremely slower. During a preliminar test with a pre-prepared dataset and two identical architectures the usage of Keras has shown to improve the timing by a huge margin \textit{(4 hours with only Tensorflow against 20 mins ca. with Keras'API)}. 
 
 \section{Dataset}
 The dataset is the collection of data which is used to train, test and validate the CNN. Our dataset is built by merging both private and public data, where the public data has been obtained from different sources all coming from \textit{Data Cancer Archive}, for a total of more than 90.000 different images.
@@ -14,12 +21,13 @@ The combination of different sources to build one single dataset is of extreme i
 All the images composing the dataset were originally greyscale dicom files \textit{(.dcm)}, but all had different dimensions and encoding, bringing forth the need of preprocessing.
 \vspace{5mm}
 \subsection{Preprocessing}
-All the following processes are executed by means of \textit{Python} scriptsThe problem of \textbf{different dimensions} is of little importance, solved solely by applying \textbf{resize} algorithms. Images are then all set to be \textit{140x140 pixels}. This is to satisfy two fundamental requirements:
+All the following processes are executed by means of \textit{Python} scripts. The problem of \textbf{different dimensions} is of little importance, solved solely by applying \textbf{resize} algorithms. Images are then all set to be \textit{140x140 pixels} and then converted into .png format. This is to satisfy three fundamental requirements:
 \begin{enumerate}
 	\item \textbf{Hardware:} 512x512 pixels images require approximately \textbf{52 GB} of RAM. A similar problem comes out with 256x256 pixels images, whose requirements come at around \textbf{13 GB} of RAM. Then why not 128x128 pixels images? That is due to the second requirement.
-	\item \textbf{Inception Model:} Google Inception Networks require for images to have minimum dimensions of 140x140 pixels.
+	\item \textbf{Inception Model:} Google InceptionV3 Networks require for images to have minimum dimensions of 140x140 pixels.
+	\item \textbf{Keras:} The \textit{flow_from_directory} method written in Keras which is used to feed images directly into the network does not accept .dcm files, thus the need of converting them into an acceptable format. Between the available ones \textit{.png} came out as our choice. PNG format, having lossless compression, allows for an excellent compromise between quality and dimension of the compressed image.
 \end{enumerate}
-Thus the decision of setting the image dimensions at the standard minimum for both conditions to be satisfied.
+Thus the decision of setting the image dimensions at the standard minimum for both conditions and coverting them to .png is to satisfy all the aforementioned conditions.
 
 \textbf{Encoding}, instead, proves out to be quite a challenge. Images in our dataset show out being encoded with either \textit{12-bit encoding} or \textit{15-bit encoding}. This makes it difficult for the network to read them, as almost white pixels in 12-bit encoding (i.e. a pixel value of 4000 on a maximum of 4096) would turn out to be darkgray in 15-bit encoded images (i.e. a pixel value of 4000 on a maximum of 32768), where in both encodings a lower value of a pixel relates to a darker color \textit{(all images, as already stated, are grayscale)}.
 
@@ -34,7 +42,8 @@ Due to the chosen parts \textit(Lungs/Skull) being just small parts of the human
 
 \section{Pre-Trained Inception}
 As stated before, Transfer Learning stands out as a new, working and functional way for Convolutional Neural Networks. Following this alternative we've chosen to use a \Textit{Google Inception V3 Network}, a CNN which is able to achieve excellent performance with contained computational costs.\cite{Szegedy2015a} We've chosen a Pre-Trained model written and developed with \textit{Keras}, whose preventive training was conducted with an ImageNet dataset.\cite{kerasinception} This means that the Network we're going to work on is not a completely virgin network and is instead already partially trained in image recognition, even though the images used to pre-train it have nothing in common with the ones that this project aims to analyze.
-%TODO: DESCRIVERE NEL DETTAGLIO LA INCEPTION. Layers, Ottimizzatore, etc...
+As shown in \textit{Figure \ref{inceptionv3}} the Inception architecture is composed of two fundamental blocks: The \textit{Feature Extraction Module} and the \texit{Feature Classification Module}. As our Model is already pre-trained the first module is left untouched, whilst our efforts are put in the second module to adapt it to our needs.
+In the Feature Classification Module numerous things are set up according to what is needed: The classification is performed by Fully Connected Layers activated by the \textit{ReLU (Rectified Linear Unit)} function and a \textit{Dropout Layer} with a 0.5 value is used to avoid overfitting. The final classification is performed by a Layer with a \textit{Sigmoid} Activation. The result given by the network is a number between 0 and 1 for every image. The closer it is to 0 the more the Network is certain about that image being a Lungs/Skull, the closer it is to 1 the more the Network is certain about said image being a NotLungs/NotSkull. Any image with a score equal or below 0.5 is classified as an image belonging to the target section and viceversa. The equality is given to the target section as it's definetly better to have false positives rather than false negatives. (It is better for an image not in the target section to be analysed rather than an image belonging to it which is not analysed). 
 
 \section{Training and Testing}
 We have conducted numerous tests on this Pre-Trained Inception Network. First of all, the Lungs/NotLungs dataset has been set and prepared. Every session of Training and Testing followed the subsequent order with no exception whatsoever:
