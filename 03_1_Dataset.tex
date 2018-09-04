@@ -9,7 +9,6 @@ These images before being processed by the neural network have been improved, to
 
 
 \subsection{Image Data Pre-Processing}
-%As we know deep learning uses neural nets with a lot of hidden layers and requires large amounts of training data. Thanks to availability of huge data-sets and advances in raw compute power and the rise of efficient parallel hardware the use of machine learning in the recent years has increased steadily.
 Building an effective neural network model requires careful consideration of the network architecture as well as the input data format. The most common image data input parameters are the number of images, image height, image width, number of channels and number of levels per pixel. Typically we have 3 channels of data corresponding to the colors Red,Green, Blue (RGB) Pixel levels are usually [0,255].
 
 Dataset images need to be converted into the right format, we converted them in \textit{.csv} file to reduce variables reading time. After downloading the image data, images are arranged in separate sub-folders by patient's ID and again in lung/not lung folders.
@@ -77,27 +76,72 @@ Feature extraction involves extracting a higher level of information from raw pi
 
 The philosophy behind deep learning is correlated with human being. Just after birth, a child is incapable of perceiving his surroundings, but as he progresses and processes data, he learns to identify things, wherein no hard-coded feature extractor is built in. It combines the extraction and classification modules into one integrated system and it learns to extract, by discriminating representations from the images and classify them based on supervised data.
 
-One such system is multilayer perceptrons aka neural networks which are multiple layers of neurons densely connected to each other. A deep vanilla neural network has such a large number of parameters involved that it is impossible to train such a system without overfitting the model due to the lack of a sufficient number of training examples. But with Convolutional Neural Networks(ConvNets), the task of training the whole network from the scratch can be carried out using a large dataset like ImageNet. The reason behind this is, sharing of parameters between the neurons and sparse connections in convolutional layers. It can be seen in this figure 2. In the convolution operation, the neurons in one layer are only locally connected to the input neurons and the set of parameters are shared across the 2-D feature map.
-IMMAGINE
+\subsection{Introduction}
+\textbf{Artificial neural networks (ANNs)} are software implementations of the neuronal
+structure of our brains, it contains neurons which are kind of like organic
+switches. These can change their output state depending on the strength of their
+electrical or chemical input. The neural network in a person’s brain is a hugely
+interconnected network of neurons, where the output of any given neuron may be the
+input to thousands of other neurons. Learning occurs by repeatedly activating certain
+neural connections over others, and this reinforces those connections. This
+makes them more likely to produce a desired outcome given a specified input. This
+learning involves feedback – when the desired outcome occurs, the neural connections
+causing that outcome becomes strengthened. Artificial neural networks (ANN) attempt to simplify and mimic this brain behavior. They can be
+trained in a supervised or unsupervised manner. In a supervised ANN, the network is
+trained by providing matched input and output data samples, with the intention of getting
+the ANN to provide a desired output for a given input. The learning takes place be adjusting the weights of the ANN connections. \cite
 
-a. Accuracy:
-If you are building an intelligent machine, it is absolutely critical that it must be as accurate as possible. One fair question to ask here is that ‘accuracy not only depends on the network but also on the amount of data available for training’. Hence, these networks are compared on a standard dataset called ImageNet.
+Since an image consists of many pixels and each pixel is possibly represented by multiple color values, the representation of that image in the input layer can become highly complex. For example, a full HD RGB image with 1920×1080 pixels would, for instance, require an input layer consisting of about six million neurons. If one would use
+the simple fully-connected network architecture, each neuron in the subsequent layer would then
+be connected to about six million neurons and if the first
+fully-connected layer would contain just 1000 neurons, the
+total number of parameters would amount to over six billion.
+Since the network has to optimize all of these parameters,
+the training process could then become very time and storage intensive.
 
-b. Computation:
-Most ConvNets have huge memory and computation requirements, especially while training. Hence, this becomes an important concern. Similarly, the size of the final trained model becomes important to consider if you are looking to deploy a model to run locally on mobile. As you can guess, it takes a more computationally intensive network to produce more accuracy. So, there is always a trade-off between accuracy and computation.
+In order to solve the computational problem, a different
+kind of network architecture is used, called \textbf{Convolutional Neural Network (CNN)}. CNNs are specifically designed for
+working with images. For this reason, the neurons of a layer
+are organized across the three dimensions, height, width and
+depth, just like the pixels in an image where the depth
+dimension would differentiate the different color values. In
+addition to that, CNNs introduce two new types of hidden
+layers in which each neuron is only connected to a small
+subset of the neurons in the previous layer, to prevent the
+aforementioned problem. \cite{article}
 
-Apart from these, there are many other factors like ease of training, the ability of a network to generalize well etc. The networks described below are the most popular ones and are presented in the order that they were published and also had increasingly better accuracy from the earlier ones.
+The main aspects we have to consider to have a good convolutional neural network are:
 
-\subsection{AlexNet}
-This architecture was one of the first deep networks to push ImageNet Classification accuracy by a significant stride in comparison to traditional methodologies. It is composed of 5 convolutional layers followed by 3 fully connected layers, as depicted in Figure 1.
+\textbf{1. Accuracy:}
+It is absolutely critical that it must be as accurate as possible. Accuracy not only depends on the network but also on the amount of data available for training. Bigger is the dataset available, better the accuracy will be.
+
+\textbf{b. Computation:}
+Most Convolutional Neural Networks (CNN) have huge memory and computation requirements, especially while training. Hence, this becomes an important concern. Similarly, the size of the final trained model becomes important to consider if you are looking to deploy a model to run locally on mobile. As you can guess, it takes a more computationally intensive network to produce more accuracy. So, there is always a trade-off between accuracy and computation.
+
+There are also other factors like ease of training and the ability of a network to generalize well. The networks described below are the famous ones and the ones we used for our test, we'll next comment preliminary grapichs that show results from using different nets.
+
+\subsection{LeNet}
+LeNet-5 comprises 7 layers, not counting the input, all of which contain trainable parameters, called weights.
 \begin{figure}[htbp] 
 \centering 
-\includegraphics[width=0.5\textwidth]{alexnet}
-\caption{AlexNet} 
-\label{alexnet} 
+\includegraphics[width=0.5\textwidth]{lenet}
+\caption{LeNet architecture} 
+\label{lenet} 
+\end{figure}
+
+\cite{Lecun}
+
+\subsection{VGGNet}
+This architecture is characterized by its simplicity, less levels but more convolutions each, using only 3×3 convolutional layers stacked on top of each other in increasing depth. Reducing volume size is handled by max pooling. Two fully-connected layers are then followed by a softmax classifier.
+
+\begin{figure}[htbp] 
+\centering 
+\includegraphics{vggnet}
+\caption{VGGNet architecture \cite{vggnet}} 
+\label{vggnet} 
 \end{figure} 
 
-AlexNet, proposed by Alex Krizhevsky, uses ReLu(Rectified Linear Unit) for the non-linear part, instead of a Tanh or Sigmoid function which was the earlier standard for traditional neural networks. ReLu is given by 
+Each convolutional layer uses ReLu(Rectified Linear Unit) for the non-linear part instead of a Sigmoid function which was the earlier standard for traditional neural networks. ReLu is given by 
 
 f(x) = max(0,x)
 
@@ -110,32 +154,10 @@ In the network, ReLu layer is put after each and every convolutional and fully-c
 \caption{ReLu} 
 \label{relu} 
 \end{figure}
-Another problem that this architecture solved was reducing the over-fitting by using a Dropout layer after every FC layer. Dropout layer has a probability,(p), associated with it and is applied at every neuron of the response map separately. It randomly switches off the activation with the probability p, as can be seen in the figure below.  
 
-\begin{figure}[htbp] 
-\centering 
-\includegraphics[width=0.5\textwidth]{dropout}
-\caption{Dropout} 
-\label{dropout} 
-\end{figure}
-The idea behind the dropout is similar to the model ensembles. Due to the dropout layer, different sets of neurons which are switched off, represent a different architecture and all these different architectures are trained in parallel with weight given to each subset and the summation of weights being one. For n neurons attached to DropOut, the number of subset architectures formed is 2^n. So it amounts to prediction being averaged over these ensembles of models. This provides a structured model regularization which helps in avoiding the over-fitting. Another view of DropOut being helpful is that since neurons are randomly chosen, they tend to avoid developing co-adaptations among themselves thereby enabling them to develop meaningful features, independent of others.
+Despite VGGNet being characterized by its simplicity and its ability in solving many deep learning image classification problems, this network has some disadvantages: it is very slow to train and the network architecture weights are quite large.\cite{vgg}
 
-\subsection{GoogLeNet/Inception}
-The GoogLeNet builds on the idea that most of the activations in a deep network are either unnecessary(value of zero) or redundant because of correlations between them. Therefore the most efficient architecture of a deep network will have a sparse connection between the activations, which implies that all 512 output channels will not have a connection with all the 512 input channels. There are techniques to prune out such connections which would result in a sparse weight/connection. But kernels for sparse matrix multiplication are not optimized in BLAS or CuBlas(CUDA for GPU) packages which render them to be even slower than their dense counterparts.
+\subsection{VGGNet vs Lenet}
 
-\begin{figure}[htbp] 
-\centering 
-\includegraphics[width=0.5\textwidth]{googlenet}
-\caption{GoogleNet} 
-\label{https://stackoverflow.com/questions/47633393/how-to-calculate-the-number-of-layer-for-googlenet} 
-\end{figure}
-So GoogLeNet devised a module called inception module that approximates a sparse CNN with a normal dense construction(shown in the figure). Since only a small number of neurons are effective as mentioned earlier, the width/number of the convolutional filters of a particular kernel size is kept small. Also, it uses convolutions of different sizes to capture details at varied scales(5X5, 3X3, 1X1).
-
-Another salient point about the module is that it has a so-called bottleneck layer(1X1 convolutions in the figure). It helps in the massive reduction of the computation requirement as explained below.
-
-Let us take the first inception module of GoogLeNet as an example which has 192 channels as input. It has just 128 filters of 3X3 kernel size and 32 filters of 5X5 size. The order of computation for 5X5 filters is 25X32X192 which can blow up as we go deeper into the network when the width of the network and the number of 5X5 filter further increases. In order to avoid this, the inception module uses 1X1 convolutions before applying larger sized kernels to reduce the dimension of the input channels, before feeding into those convolutions. So in the first inception module, the input to the module is first fed into 1X1 convolutions with just 16 filters before it is fed into 5X5 convolutions. This reduces the computations to 16X192 +  25X32X16. All these changes allow the network to have a large width and depth.
-
-Another change that GoogLeNet made, was to replace the fully-connected layers at the end with a simple global average pooling which averages out the channel values across the 2D feature map, after the last convolutional layer. This drastically reduces the total number of parameters. This can be understood from AlexNet, where FC layers contain approx. 90/100 of parameters. Use of a large network width and depth allows GoogLeNet to remove the FC layers without affecting the accuracy.
-\cite{multi}
 \vspace{5mm}
 \end{document}
