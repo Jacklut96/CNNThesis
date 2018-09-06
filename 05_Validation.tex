@@ -3,14 +3,27 @@
 %\chapter{Validation, evaluation,  potential}
 \label{capitolo6}
 \thispagestyle{empty}
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut eu ligula a nulla dignissim gravida eu sed odio. Vestibulum id nibh a augue feugiat pharetra. Quisque dignissim turpis enim, vitae sagittis nisi lobortis sit amet. Nulla nulla quam, lacinia et bibendum id, aliquam in arcu. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Maecenas molestie id ex ut posuere. Maecenas luctus purus quis sapien elementum finibus. Sed ultricies ullamcorper eleifend. Ut imperdiet, eros nec placerat imperdiet, augue lacus fringilla turpis, quis eleifend diam eros id diam.
 
-Maecenas eu pulvinar augue, sit amet accumsan orci. Etiam fringilla ligula eu ligula condimentum, ac tristique quam venenatis. Ut eget maximus quam. Proin ac nisl vitae magna aliquet accumsan. Aenean convallis mollis lacus, vitae porta quam feugiat sed. Sed nec semper magna, id finibus quam. Pellentesque vitae ipsum et ligula convallis varius at in nibh. Donec mattis purus purus, in ornare tellus congue at.
+In this chapter we will observe the results obtained from the aformentioned tests \ref{capitolo4}. Such results will then be anayzed and discussed, contestualizing them into the project concept and considering their value.
 
-Morbi accumsan velit a arcu imperdiet pellentesque. Suspendisse in felis id ex tincidunt suscipit eu tempus eros. Phasellus at velit ut lorem rutrum sollicitudin. Nulla ullamcorper aliquam convallis. Donec et diam id enim pretium elementum eu in leo. Cras turpis nunc, aliquet non mauris et, bibendum dictum felis. Aliquam nec eros id libero vestibulum malesuada non quis leo. Sed arcu dolor, ultricies at eleifend laoreet, aliquet ac orci.
+\section{Test Setup}
+All the following tests have been executed on a machine with \%TODO: INSERIRE SPECIFICHE DWARF.
+The tests have been performed on two different datasets, prepared as defined in \ref{capitolo4}: this was basically due to time costraints, and even though only Lungs/NotLungs and Skull/NotSkull datasets have been used, such is not to be considered a limitation of the architecture. As will be shown later, the obtained results will be good enough to almost assure that the model is capable of detecting any kind of anatomic site with high accuracy results.
+With a source code written entirely in Python and datasets with lots of images, long computational times were to be expected. On the aformentioned architecture training/testing times spaced within a range of 30 minutes to 10 hours circa, being extremely dependant on used dataset dimension. Such a higly time-costing process, though, is one-time only, because once trained the now ready model is saved and can then be loaded and extensively used without any kinds of limitation. When the already trained model is then used to perform classification on never seen images, a process which will be referred to as \textit{Predicting}, execution time is estimated at around 3 minutes for a 3000 images dataset. Considering how full CT exams rarely have more than 500 images, it is possible to conclude that the expected time for Prediction is even lower, even though most of its computational cost comes from loading the trained model.
 
-Nam in justo venenatis nibh feugiat finibus. Duis nec magna non velit pellentesque pharetra. Integer ut condimentum augue, id pretium massa. Duis vitae auctor tellus, eget convallis nibh. Nulla non commodo mauris. Fusce at diam nunc. Integer et condimentum ante, in lobortis orci.
+\section{Results}
+\subsection{Lungs\\NotLungs}
+The following table shows the results coming from the test performed on the Lungs/NotLungs Dataset. The whole dataset is composed of 25000 images labeled as \textit{"Lungs"} and 75000 labeled as \textit{"NotLungs"}. As already stated, such a difference in size between the "target" and the "general" sections is to be expected, as Lungs, for example, compose only a part of the human body. The process which describes how the Prediction Accuracy, which can be considered the "final" result, is achieved is completely explained in \ref{capitolo4}.
+\%TODO: INSERIRE TABELLA DEI RISULTATI QUI
 
-Ut vehicula quis urna at vulputate. Nam quis neque non quam finibus placerat. Ut mauris eros, mattis eu urna et, maximus aliquam risus. Nam pulvinar mauris tellus, placerat tincidunt metus egestas sed. Sed id odio in mi fermentum sagittis. Cras efficitur placerat finibus. Quisque quis tortor ut sapien malesuada iaculis. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam molestie tortor sem, eget fermentum metus molestie laoreet. Ut posuere libero in est cursus, vitae dapibus nisi scelerisque. Phasellus posuere elit in metus tincidunt commodo.
+\begin{itemize}
+	\item \textit{Train Accuracy:} Percentage of correctly \textit{"guessed"} (label assigned by the CNN and ground truth match) images in the last epoch (10th) of training.
+	\item \textit{Train Loss:} Value of the loss function in the last epoch (10th) of training.
+	\item \textit{Validation Accuracy:} Percentage of correctly guessed images in the last validation step (full trained network).
+	\item \textit{Validation Loss:} Value of the loss function in the last validation step (full trained network).
+	\item \textit{Prediction Accuracy:} Percentage of correctly guessed images in the prediction dataset.
+\end{itemize}
 
-\end{document}
+The difference between Validation Accuracy and Prediction Accuracy is of utmost importance: Validation images are seen by the CNN at the end of every step of traning, working as a "training field" on which the Net can check its performance. It is a fundamental step in machine learning, but its results are more than often not valuable as benchmarks. Thus the need of a Prediction Dataset: All the images it contains are never seen by the Network during its training, so the results provided by this step are functional to be defined as benchmarks for the CNN's efficiency.
+
+As it can be seen in the \ref{tablerone}
