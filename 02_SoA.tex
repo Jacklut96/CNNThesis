@@ -5,8 +5,7 @@
 \label{stateofart}
 \thispagestyle{empty}
 
-
-In this chapter we will discuss the current State of the Art concerning the Neural Networks, with a specific focus on Convolutional Neural Networks: the different available types, their evolution and their workflow. At the end of this chapter, after analysing everything aforementioned, we will discuss the current use of CNN  in body-part recognition and our solution for this specific problem will be proposed. \\ 
+In this chapter the current State of the Art concerning the Neural Networks will be discussed, with a specific focus on Convolutional Neural Networks: the different available types, their evolution and workflow. At the end of this chapter, after analysing everything aforementioned, the current use of CNN in body-part recognition will be considered and also the solution for this specific problem will be proposed. \\ 
 
 \vspace{5mm}
 \clearpage
@@ -24,8 +23,8 @@ In this chapter we will discuss the current State of the Art concerning the Neur
 
 \section{Neural Networks}
 Neural networks are mathematical models inspired by the human brain cells, the neurons. \\ 
-A biological neuron can be seen as composed by three parts: \textbf{the dendrites}, that receive the input signals from the other neurons, \textbf{the nucleus} which computes the output signal to pass to the next neurons layer and \textbf{the axon} which transmits the nucleus signal forward to other neurons' dendrites. \\
-Its simplest mathematical model, \textit{the perceptron}, has multiple inputs $v_{1...n}$ (corresponding to \textbf{the dendrites}), an activation function $\Sigma_{k=1}^n w_k*v_k$ (which computes the various input signals just as \textbf{the nucleus} does) and one output $y_i$ (\textbf{the axon}). To completely mimic the biological neuron, together with its action potential, a \textit{bias} (a real number representing the minimum value required to have an output) is applied as an additional input. \textit{(Figure ~\ref{fig:neuron})}
+A biological neuron can be seen as composed by three parts: \textbf{dendrites}, which receive the input signals from the other neurons, \textbf{nucleus} which computes the output signal to pass to the next neurons layer and \textbf{axon}, which transmits the nucleus signal forward to other neurons'dendrites. \\
+Its simplest mathematical model, \textit{the perceptron}, has multiple inputs $v_{1...n}$ (corresponding to \textbf{dendrites}), an activation function $\Sigma_{k=1}^n w_k*v_k$ (which computes the various input signals just as \textbf{the nucleus} does) and one output $y_i$ (\textbf{the axon}). To completely mimic the biological neuron, together with its action potential, a \textit{bias} (a real number representing the minimum value required to have an output) is applied as an additional input. \textit{(Figure ~\ref{fig:neuron})}
 
 
 \begin{figure}[!b]
@@ -38,7 +37,7 @@ Its simplest mathematical model, \textit{the perceptron}, has multiple inputs $v
 
 Perceptrons, acting as single processing units, are connected in networks to solve complicated problems. There are various types of neural networks (NN) but their basic principles are very similar \cite{Svozil1997}: 
 \begin{itemize}
-	\item each neuron is able to receive input signals, to process them and send an output signal;
+	\item each neuron is able to receive input signals, process them and send an output signal;
 	\item each neuron is connected with at least one neuron in the network; 
 	\item each connection is evaluated by a real number, called \textit{weight coefficient}, that reflects the degree of importance of the given connection in the network. (as seen in \textit{Figure ~\ref{fig:ann-structure}})
 \end{itemize}
@@ -48,7 +47,7 @@ A multi-layer forward (MLF) neural network consists of neurons that are organise
 \vspace{5mm}
 \subsection{Learning process}
 What really makes neural networks stand out in classification tasks is their ability to \textit{learn}: to capture an a-priori unknown information in the data is called "learning" (or "training"), and can be done by varying the weights coefficient in such a way that some conditions are fulfilled. \cite{Svozil1997} \\ 
-There are two types of training: 
+There are two different types of training: 
 \begin{enumerate}
 	\item Supervised training: the NN knows the desired output and adjust the coefficients in such a way that the calculated and desired output are as close as possible;
 	\item Unsupervised training: the desired output is unknown, the system is provided a group of facts (\textit{pattern}) and then left to itself to settle down to a stable state.
@@ -67,13 +66,13 @@ To better understand the concept, with one dimensional input the slope of a deri
 \subsection{Overfitting}
 The main problem concerning the usage of NN in classification problem is \textbf{overfitting}: in statistics and computer science, \textit{overfitting} is the production of an analysis that corresponds too closely or exactly to a particular set of data, and may therefore fail to fit additional data or predict future observations reliably.  \\ 
 This happens when the learning algorithm is trained on too many samples, excessively fitting them, or has too many parameters that can be justified by the data, extracting therefore some unknown variations (such as noise) as if they represented the underlying information to capture. \\
-An overfitted model may perform extremely well on the training data but fails to classify other similar inputs: for this reason is seldom hard foresee an overfitting during the training process and requires a trial-and-error procedure to set the ideal training parameters.  
+An overfitted model may perform extremely well on the training data but fails to classify other similar inputs: for this reason is seldom hard to foresee overfitting during the training process, and a trial-and-error procedure is required to set the ideal training parameters.  
 
 \vspace{5mm}
 \section{Convolutional Neural Networks (CNNs)}
-During the $20^{th}$ century, in order to solve images classification problems, a new type of NN was developed, the \textit{Convolutional Neural Network}. \\
+During the end of the $20^{th}$ century, in order to solve images classification problems, a new type of NN was developed, the \textit{Convolutional Neural Network}. \\
 CNNs were inspired by the recent discoveries in the visual cortex of a cat \cite{Hubel1962}, as it was observed how contiguous neurons in the visual cortex received stimuluses from different bordering patches of light-receptors in the cat's eye: in these new NNs each neuron in a layer receives inputs from a set of neurons located in a small neighbourhood in the previous layer.  \\
-This can be mathematically achieved by considering an image as a matrix whose elements correspond to the \textbf{pixel values}: in a grey scale image, the pixel value represents the brightness of a pixel on a range from 0 to 255, while on multi-colour images the pixel value is a three dimensional array of red, green and blue (RGB) brightness components.  
+This can be mathematically achieved by considering an image as a matrix whose elements correspond to the \textbf{pixel values}: in a grey scale image, the pixel value represents the brightness of a pixel on a range from 0 to 255 (where 0 is black and 255 is white), while on multi-colour images the pixel value is a three dimensional array of red, green and blue (RGB) brightness components.  
 In order to mimic the light-receptors patches, a convolution is computed between the input image and another matrix (whose elements are the desired weights and whose dimension corresponds to the receptive field's), called \textit{filter} or \textit{kernel}: a convolution between matrices is the sum of the element-wise product of the two.  \textit{(Figure \ref{fig:con})} \\
 
 \begin{figure}[H]
@@ -100,7 +99,7 @@ The fully connected layers give the probability of an image to belong to a certa
 %\end{figure}
 
 \subsection{Transfer learning}
-Another advantage of using neural networks, is the so-called \textit{transfer learning}: in machine learning, transfer learning refers to application of a process suited for one specific task to a different problem. \cite{Lakhani2018} \\ Since all of the images share same features (such as edges and blobs), a pre-trained CNN can be used in a very different context with the transfer learning technique: removing only the last fully connected layers, removes the need of filter weights to be learned again, leaving the training process to tune the new classification levels. This reduces the amount of images needed to have performing results and is especially useful in medical imaging classification tasks, as it may be difficult to annotate a large dataset to train from scratch. \cite{Lakhani2018} 
+Another advantage of using neural networks is the so-called \textit{transfer learning}: in machine learning, transfer learning refers to application of a process suited for one specific task to a different problem. \cite{Lakhani2018} \\ Since all of the images share the same features (such as edges and blobs), a pre-trained CNN can be used in a very different context with the transfer learning technique: removing only the last fully connected layers, removes the need of filter weights to be learned again, leaving the training process to tune the new classification levels. This reduces the amount of images needed to have performing results and is especially useful in medical imaging classification tasks, as it may be difficult to annotate a large dataset to train from scratch. \cite{Lakhani2018} 
 
 \clearpage
 \newpage 
@@ -117,13 +116,13 @@ Another advantage of using neural networks, is the so-called \textit{transfer le
 
 \begin{description}
 \item[LeNet (1994 ca.)] \cite{LeCun1998}. \hfill \\
-One of the first convolutional neural network to be designed was the LeNet-5 \textit{(Figure \ref{fig:lenet5})}, where the number 5 stands for the dimension of the kernel in the convolution layers C1-C3-C5. It consists of seven different layers: three convolutional, two sub-sampling and two fully connected layers \cite{LeCun1998}. 
+One of the first convolutional neural network to be designed was the LeNet-5 \textit{(Figure \ref{fig:lenet5})}, where the number 5 stands for the dimension of the kernel in the convolution layers C1-C3-C5. It consists of seven different layers: three convolutional, two sub-sampling and two fully connected layers, obiviously at the end.\cite{LeCun1998}. 
 \end{description}
 
 
 
-After this initial LeNet model, there hasn't been a large focus on Convolutional Neural Networks until recent years: in 2010, the first ImageNet Large Scale Visual Recognition Challenge (ILSVRC) was organised \cite{Russakovsky} and has quickly became a benchmark for the state of the art of CNNs image classification. It consists of two components: the public common dataset and the annual competition to vote the most successful entry every year. The competition tasks are: image classification, single-object localisation and object detection. \cite{Russakovsky} \\
-In these last years of competition different successful architectures have been developed and, winning the challenge, became the state of the art to compare with.
+After this initial LeNet model, there has not been a large focus on Convolutional Neural Networks until recent years: in 2010, the first ImageNet Large Scale Visual Recognition Challenge (ILSVRC) was organised\cite{Russakovsky}, quickly becoming a benchmark for the state of the art of CNNs image classification. It consists of two components: the public common dataset and the annual competition to vote the most successful entry every year. The competition tasks are: image classification, single-object localisation and object detection.\cite{Russakovsky} \\
+In these last years of competition different successful architectures have been developed and, winning the challenge, became the state of the art to compete against.
 \clearpage
 \newpage
 
@@ -131,7 +130,7 @@ In these last years of competition different successful architectures have been 
 \begin{description}
 \item[AlexNet (2012)] \cite{Krizhevsky2012} \hfill \\
 The AlexNet won the ILSVRC competition in 2012; this new architecture consists of five convolutional layers and three fully connected layers \textit{(Figure \ref{fig:alexnet})}.\\
-The most distinctive features are: the usage of a \textit{ReLU (REctified Linear Unit)} function ($f(x)=max\{0,x\}$) as neurons' activation function instead of the usual $f(x)=tanh(x)$ to improve the training speed; \textit{multiple GPUs} working on two parallel pipelines and communicating only on certain levels, as seen in figure \ref{fig:alexnet}; \textit{local response normalisation}, consisting in normalising the feature outputs with ones in different feature maps to maximise the sensitivity with high inputs and \textit{overlapping pooling}, to reduce the overfitting \cite{Krizhevsky2012} %(\textit{overfitting} is a term to express a poor generalisation capacity of the network) \\
+The most distinctive features are: the usage of a \textit{ReLU (REctified Linear Unit)} function ($f(x)=max\{0,x\}$) as neurons' activation function instead of the usual $f(x)=tanh(x)$ to improve the training speed; \textit{multiple GPUs} working on two parallel pipelines and communicating only on certain levels, as seen in figure \ref{fig:alexnet}; \textit{local response normalisation}, consisting in normalising the feature outputs with ones in different feature maps to maximise the sensitivity with high inputs and \textit{overlapping pooling} to reduce overfitting. \cite{Krizhevsky2012} %(\textit{overfitting} is a term to express a poor generalisation capacity of the network) \\
 
 \vspace*{7mm}
 \begin{figure}[H]
@@ -176,9 +175,9 @@ The VGG-net (named after the team that came up with this model, the Oxford's Vis
 The VGG-net has five max-pooling layers and three fully-connected layers; to avoid memory consumption, it doesn't have a local response normalisation nor a sub-sampling overlapping. \\
 
 \item[GoogLeNet/Inception (2014)] \cite{Szegedy2015} \hfill \\ 
-The GoogLeNet beat the VGG-net arriving first at the 2014 ILSVRC competition; the revolutionising concept of this model is that, in order to be more accurate and improve the state of the art performance, stacking layers and create bigger models is not a good idea: first, the computational cost rise with increased layers and second, having more coefficients leads to a higher overfitting probability. \\ 
-To solve both issues, the solution is to move from fully connected to sparsely connected architectures: Inception architecture (another name for this network) is based on finding how an optimal local sparse structure in a convolutional vision network can be approximated and covered by readily available dense components, and repeat it spatially.\cite{Szegedy2015}
-This mean that the proposed architecture is composed by the Inception modules \textit{(Figure \ref{fig:blocks} (a))} stacked on top of each other: these modules perform various dimensional convolutions and concatenate the different features into a single output to the next block, resulting in low computational cost and high abstraction capacity.\\
+The GoogLeNet beat the VGG-net arriving first at the 2014 ILSVRC competition; the revolutionising concept of this model is that, in order to be more accurate and improve the state of the art performance, stacking layers and creating bigger models is not a good idea: first, the computational cost rises with layers' increasement and second, having more coefficients leads to higher overfitting probabilities. \\ 
+In order to solve both issues, the decision was to move from fully connected to sparsely connected architectures: Inception architecture (another name for this network) is based on finding how an optimal local sparse structure in a convolutional vision network can be approximated and covered by readily available dense components, and repeats it spatially.\cite{Szegedy2015}
+This means that the proposed architecture is composed by Inception modules \textit{(Figure \ref{fig:blocks} (a))} stacked on top of each other: these modules perform various dimensional convolutions and concatenate the different features into a single output onto the next block, resulting in low computational cost and high abstraction capability.\\
 
 \item[ResNet (2015)] \cite{Wu2017} \hfill \\
 The ResNet won the 2015 ILSVRC, basing its architecture on the VGG-net structure, adding every two convolutional layer an identity shortcut (a residual) \textit{(Figure \ref{fig:blocks} (b))}: using a mathematical approach, let $\mathcal {H}(X)$ be the underlying mapping function to be learned, and let $\mathcal{F}(X)=\mathcal {H}(X) + X $ be another mapping that the stacked nonlinear fit. The original mapping is recast into $\mathcal{F}(X)+X$ because this residual mapping is easier to optimise than the original, unreferenced mapping. \cite{Wu2017} \\
@@ -205,15 +204,15 @@ Changing the underlying mapping function to be learned (adding residual modules 
 \clearpage
 \newpage
 \section{Automatic body-part recogntion}
-With a widespread use of digital imaging data in hospitals and the rising relevance and efficiency of computer-aided diagnoses , the size of medical image repositories is increasing rapidly: this causes difficulty in managing and querying these large databases leading to the need of automatic medical image retrieval systems. \cite{Qayyum2017} \\
+With a widespread use of digital imaging data in hospitals and the rising relevance and efficiency of computer-aided diagnoses, the size of medical image repositories is increasing rapidly: this causes difficulty in managing and querying these large databases leading to the need of automatic medical image retrieval systems. \cite{Qayyum2017} \\
 
-Anatomy recognition in whole-body CT images is challenging due to the low contrast resolution of the low-dose CT image. Many image segmentation methods have been investigated and applied to CT images, but mostly for segmenting pathological regions. These include thresholding, gradient-directed, region growing, clustering, deformable model driven techniques, and graph-based approaches \cite{Wang}: these methods are sensitive to noise and require prior knowledge of fixed features of interest before segmentation. \\
+Anatomy recognition in whole-body CT images is challenging due to the low contrast resolution of the low-dose CT image. Many image segmentation methods have been investigated and applied to CT images, but mostly for segmenting pathological regions. These include thresholding, gradient-directed, region growing, clustering, deformable model driven techniques, and graph-based approaches\cite{Wang}: these methods are sensitive to noise and require prior knowledge of fixed features of interest before segmentation. \\
 Most published papers on CT image analysis have focused only on pathological region recognition and not organ anatomy recognition: the development of a robust object localisation/recognition method that works on low-dose CT would constitute an advancement of the state of the art in CT quantitative image analysis.\cite{Wang}
 
 As stated in the introduction, an auto-bodypart recognition algorithm benefits radiological workflow in different aspects; a bodypart-based query in the hospital's PACS could be based on the text information contained in the DICOM header, but, since the header is no exempt from errors  \cite{Yan2016}), an automatic bodypart recognition will enable content-based image retrieval and improve the retrieval precision. \cite{Yan2016} \\ \\
-\textbf{Content based image retrieval} (CBIR) is a computer vision technique that gives a way for searching relevant images in large databases.  \\This search is based on the image features like color, texture and shape or any other features being derived from the image itself. Therefore the performance of a CBIR system mainly depends on these selected features \cite{Qayyum2017}: since convolutional neural networks don't need any fixed features but learn them from the images instead, they can be a better approach for bodypart CBIR.\\
+\textbf{Content based image retrieval} (CBIR) is a computer vision technique which gives a way for searching relevant images in large databases.  \\This search is based on the image features like color, texture and shape or any other features being derived from the image itself. Therefore the performance of a CBIR system mainly depends on these selected features \cite{Qayyum2017}: since convolutional neural networks don't need any fixed features but learn them from the images instead, they can be a better approach for bodypart CBIR.\\
 In fact, traditional methods normally use hand-crafted image classification features; lately, deep learning approaches have been adopted with promising results where CNN are employed to learn deep image features \cite{Yan2018}; furthermore, the rapid adoption of deep learning may be attributed to the availability of machine learning frameworks and libraries to simplify their use. \cite{Lakhani2018} \\ \\
-In this work we demonstrate how, using accessible tools such as Keras (a public CNNs Python high-level library) and a pre-trained Inception network \cite{Lakhani2018}, we were able to build an automatic bodypart recognition algorithm that using manually labelled .png files obtained from both public and private anonymised CT scans in DICOM format, reaches an accuracy that can be compared to the state of the art's. \cite{Qayyum2017} \cite{Yan2016} \cite{Yan2018} \cite{Wang}
+In this work it is demonstrated how, using accessible tools such as Keras (a public CNNs Python high-level library) and a pre-trained Inception network \cite{Lakhani2018}, it is possible to build an automatic bodypart recognition algorithm which, using manually labelled .png files obtained from both public and private anonymised CT scans in DICOM format, reaches an accuracy that can be compared to similar state of the art methods. \cite{Qayyum2017} \cite{Yan2016} \cite{Yan2018} \cite{Wang}
 
 %Many image segmentation methods have been investigated and applied to PET/CT images, but mostly for segmenting pathological regions. These include thresholding,5?9 gradient- directed,10 region %growing,11 clustering,12 deformable model driven techniques,13 and graph-based approaches \cite{Wang}
 
