@@ -1,0 +1,221 @@
+% !TEX root = ../main.tex
+
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+\label{stateofart}
+\thispagestyle{empty}
+
+
+In this chapter we will discuss the current State of the Art concerning the Neural Networks, with a specific focus on Convolutional Neural Networks: the different available types, their evolution and their workflow. At the end of this chapter, after analysing everything aforementioned, we will discuss the current use of CNN  in body-part recognition and our solution for this specific problem will be proposed. \\ 
+
+\vspace{5mm}
+\clearpage
+\newpage
+
+%\section{Neural Networks}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.6\linewidth]{neurons.png}
+  \caption{A biological neuron (left) and a perceptron. (right) \cite{Bio}}
+  %\source{https://hackernoon.com/how-do-artificial-neural-network-recognize-images-c3699af0f553}
+  \label{fig:neuron}
+\end{figure}
+
+
+\section{Neural Networks}
+Neural networks are mathematical models inspired by the human brain cells, the neurons. \\ 
+A biological neuron can be seen as composed by three parts: \textbf{the dendrites}, that receive the input signals from the other neurons, \textbf{the nucleus} which computes the output signal to pass to the next neurons layer and \textbf{the axon} which transmits the nucleus signal forward to other neurons' dendrites. \\
+Its simplest mathematical model, \textit{the perceptron}, has multiple inputs $v_{1...n}$ (corresponding to \textbf{the dendrites}), an activation function $\Sigma_{k=1}^n w_k*v_k$ (which computes the various input signals just as \textbf{the nucleus} does) and one output $y_i$ (\textbf{the axon}). To completely mimic the biological neuron, together with its action potential, a \textit{bias} (a real number representing the minimum value required to have an output) is applied as an additional input. \textit{(Figure ~\ref{fig:neuron})}
+
+
+\begin{figure}[!b]
+  \centering
+  \includegraphics[width=0.8\linewidth]{ann-structure.jpg}
+  \caption{A basic artificial neural network structure. \cite{ANN}}
+  %\source{ https://www.analyticsvidhya.com/blog/2016/03/introduction-deep-learning \\ -fundamentals-neural-networks}
+  \label{fig:ann-structure}
+\end{figure}
+
+Perceptrons, acting as single processing units, are connected in networks to solve complicated problems. There are various types of neural networks (NN) but their basic principles are very similar \cite{Svozil1997}: 
+\begin{itemize}
+	\item each neuron is able to receive input signals, to process them and send an output signal;
+	\item each neuron is connected with at least one neuron in the network; 
+	\item each connection is evaluated by a real number, called \textit{weight coefficient}, that reflects the degree of importance of the given connection in the network. (as seen in \textit{Figure ~\ref{fig:ann-structure}})
+\end{itemize}
+A NN can be seen as an universal approximator, it can realise an arbitrary mapping of one vector space onto another vector space \cite{Svozil1997}: i.e. if the target vector space (whose dimension is M) represents a vector of classes, the NN can realise a classification of the inputs (with $M=2$ the NN performs a \textit{binary classification}, if $M>2$ the NN performs a \textit{multinomial classification}) assigning \textbf{class scores} to an image: a \textit{class score} is the probability of an image to belong to a certain class, the higher the score, the higher the probability.   \\ 
+A multi-layer forward (MLF) neural network consists of neurons that are organised into layers: the first layer is called \textit{input layer}, the last layer is called \textit{output layer} and the layers between are \textit{hidden layers}. \cite{Svozil1997} (\textit{Figure ~\ref{fig:ann-structure}}) 
+
+\vspace{5mm}
+\subsection{Learning process}
+What really makes neural networks stand out in classification tasks is their ability to \textit{learn}: to capture an a-priori unknown information in the data is called "learning" (or "training"), and can be done by varying the weights coefficient in such a way that some conditions are fulfilled. \cite{Svozil1997} \\ 
+There are two types of training: 
+\begin{enumerate}
+	\item Supervised training: the NN knows the desired output and adjust the coefficients in such a way that the calculated and desired output are as close as possible;
+	\item Unsupervised training: the desired output is unknown, the system is provided a group of facts (\textit{pattern}) and then left to itself to settle down to a stable state.
+\end{enumerate}
+\vspace{5mm}
+A fundamental indicator of a supervised training session is the \textbf{loss function}: the \textit{loss function} quantifies the agreement between the predicted scores and the ground truth labels (the desired output). \cite{Karpathy2018} \\
+The loss function for a given set of weights \textbf{W} of a Neural Network and a vector of inputs $\mathbf{x_i}$ belonging to the $i^{th}$ element of a class vector $\mathbf{y_i}$, can be computed as: \\
+$$ L_i = \sum_{j \neq y_i}=max(0,w_j^T*x_i - w_{y_i}^T*x_i+ \Delta )$$,
+with $\mathbf{w_j}$ the $j^{th}$ row of the weights matrix. \\
+Intuitively, this loss function needs the score of the correct class $\mathbf{y_i}$ to be larger than the incorrect class scores by at least $\mathbf{\Delta}$. If this is not the case, the NN will accumulate loss: the aim of the training is thus to minimize the loss function adjusting the weights of the NN with optimisation algorithms. \\
+MLF Neural Networks, trained with a back-propagation learning algorithm are the most popular neural networks. \cite{Svozil1997}; the back-propagation algorithm used is the  \textbf{steepest descent minimisation method}: this numerical method computes all the different directional derivatives of the loss function to find the best direction in which update the weights to minimize it. \\
+To better understand the concept, with one dimensional input the slope of a derivative is the instantaneous rate of change of a function at a certain point: when the input is N-dimensional, the gradient is the vector of slopes representing the instantaneous rate of change of the function in all of the N dimensions; varying the input component corresponding to the dimension with the higher slope will cause the higher change in the function output.
+%In the back-propagation algorithm the steepest descent minimisation method is  used, but there are some variations \cite{Kuruvilla2014}: \textbf{the gradient descent back-propagation} (in which the weight and bias values are updated due to the gradient descent: an iterative method that computes the directional derivative, \textit{the gradient}, of the loss function to find the values update direction in the N-dimensional space that leads to the minimum mistake), \textbf{the gradient descent with variable learning rate} (gradient descent with adaptive \textit{learning rate}, that can be defined as the magnitude of the update at the $k^{th}$ iteration, in the direction found by computing the gradient), \textbf{the gradient descent with momentum} (gradient descent with \textit{momentum}, which is a coefficient that determines the contribute of the $k^{th}$ values and the learning rate update in finding the $(k+1)^{th}$ values), \textbf{the gradient descent with variable learning rate and momentum}, \textbf{the resilient back-propagation} (a method in which the direction of the update varies according just to the sign of the partial derivatives and not their value, thus eliminating the effect of their magnitude in the direction search), \textbf{conjugate gradient algorithms} (the step size is updated at every iteration, along conjugate directions chosen due to the loss function gradient: this assures the mathematical convergence of the algorithm in N iterations, with N the dimension of the direction searching space), \textbf{quasi-Newton algorithms} (finding the minimum of a function can be seen as finding the zero of the derivative of that function: Newton methods are used in zero-searching and have faster convergence than conjugate gradient methods), \textbf{the one step secant algorithm} (meant to bridge the gap between the conjugate gradient and quasi-Newton's algorithms) and \textbf{the Levenberg-Marquardt}.
+
+\vspace{5mm}
+\subsection{Overfitting}
+The main problem concerning the usage of NN in classification problem is \textbf{overfitting}: in statistics and computer science, \textit{overfitting} is the production of an analysis that corresponds too closely or exactly to a particular set of data, and may therefore fail to fit additional data or predict future observations reliably.  \\ 
+This happens when the learning algorithm is trained on too many samples, excessively fitting them, or has too many parameters that can be justified by the data, extracting therefore some unknown variations (such as noise) as if they represented the underlying information to capture. \\
+An overfitted model may perform extremely well on the training data but fails to classify other similar inputs: for this reason is seldom hard foresee an overfitting during the training process and requires a trial-and-error procedure to set the ideal training parameters.  
+
+\vspace{5mm}
+\section{Convolutional Neural Networks (CNNs)}
+During the $20^{th}$ century, in order to solve images classification problems, a new type of NN was developed, the \textit{Convolutional Neural Network}. \\
+CNNs were inspired by the recent discoveries in the visual cortex of a cat \cite{Hubel1962}, as it was observed how contiguous neurons in the visual cortex received stimuluses from different bordering patches of light-receptors in the cat's eye: in these new NNs each neuron in a layer receives inputs from a set of neurons located in a small neighbourhood in the previous layer.  \\
+This can be mathematically achieved by considering an image as a matrix whose elements correspond to the \textbf{pixel values}: in a grey scale image, the pixel value represents the brightness of a pixel on a range from 0 to 255, while on multi-colour images the pixel value is a three dimensional array of red, green and blue (RGB) brightness components.  
+In order to mimic the light-receptors patches, a convolution is computed between the input image and another matrix (whose elements are the desired weights and whose dimension corresponds to the receptive field's), called \textit{filter} or \textit{kernel}: a convolution between matrices is the sum of the element-wise product of the two.  \textit{(Figure \ref{fig:con})} \\
+
+\begin{figure}[H]
+ \centering
+  \includegraphics[width=0.6\linewidth]{convolution}
+  \caption{A graphical explanation of matrices convolution \cite{Conv}}
+  \label{fig:con}
+\end{figure}
+
+The whole image is processed by sliding the filter across it by a certain number of pixels (which is called \textit{stride}) after each convolution, meaning that neurons in the same layer are organised in planes within which all of them share the same set of weights (given by the kernel): the series of convolution outputs of the neurons in a single plane is called \textit{feature map} \cite{LeCun1998} \\
+%This can be done by computing a convolution between a matrix (whose elements are the desired weights and whose dimension corresponds to the receptive field's), called \textit{filter} or \textit{kernel}, and the input image: the convolutions are computed on the whole image by sliding the filter by a certain number of pixels (which is called \textit{stride}) across it after each convolution, activating sequentially all the neurons in a layer with the same weights; every convolution outputs one number only, reducing the dimension of the feature map compared to the previous layer.\\ 
+The convolution output is easy to interpret as the grade of similarity between a certain feature and the image portion: if the numerical pattern given by the weights of the filter (the feature to be found) is matched by the pixel values in the convolution region, the output in the feature map will be the maximum value. \\
+Each different plane gives a different feature map as output: an interesting property of convolutional layers is that if the input image is shifted, the feature map will be shifted by the same amount but will be left unchanged otherwise.  \\
+Once a feature has been detected its exact position becomes less important, only its approximate position to other features is relevant. Not only the exact position of the feature is irrelevant, but it is potentially harmful because of its variation in distorted or shifted inputs containing the same features: the robustness of CNNs to shifts and distortion of the inputs can be enforced by adding a so-called \textbf{sub-sampling layer}: this layer computes the average value of a region in the feature map in order to reduce the output dimension and resolution, reducing therefore the precision with which the position of distinctive features is encoded in the feature maps. \cite{LeCun1998} \\
+Sub-sampling layers are similar to pooling layers: the pooling layers pick one value from those on a certain area in a feature map according to different criterions (e.g. \textbf{max pooling} takes the maximum, \textbf{average pooling} takes the average value, etc.) to represent the whole area. 
+It's important to note that convolutional and sub-sampling/pooling layers \textbf{extract features} from the input images but do not elaborate them: the classification takes place in the last CNNs layers (the so-called fully connected layers) that have the same structure as the hidden layers in MLF neural networks. 
+The fully connected layers give the probability of an image to belong to a certain class based on the position and the magnitude of the values in the feature maps they are given as input. \\ 
+
+%\begin{figure}[H]
+%  \centering
+%  \includegraphics[width=\linewidth]{lenet5.png}
+%  \caption{Architecture of LeNet-5 for hand-written digits recognition \cite{LeCun1998}}
+%  \label{fig:lenet5}
+%\end{figure}
+
+\subsection{Transfer learning}
+Another advantage of using neural networks, is the so-called \textit{transfer learning}: in machine learning, transfer learning refers to application of a process suited for one specific task to a different problem. \cite{Lakhani2018} \\ Since all of the images share same features (such as edges and blobs), a pre-trained CNN can be used in a very different context with the transfer learning technique: removing only the last fully connected layers, removes the need of filter weights to be learned again, leaving the training process to tune the new classification levels. This reduces the amount of images needed to have performing results and is especially useful in medical imaging classification tasks, as it may be difficult to annotate a large dataset to train from scratch. \cite{Lakhani2018} 
+
+\clearpage
+\newpage 
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\linewidth]{lenet5.png}
+  \caption{Architecture of LeNet-5 for hand-written digits recognition \cite{LeCun1998}}
+  \label{fig:lenet5}
+\end{figure}
+
+\vspace{5mm}
+\subsection{CNNs architectures}
+
+\begin{description}
+\item[LeNet (1994 ca.)] \cite{LeCun1998}. \hfill \\
+One of the first convolutional neural network to be designed was the LeNet-5 \textit{(Figure \ref{fig:lenet5})}, where the number 5 stands for the dimension of the kernel in the convolution layers C1-C3-C5. It consists of seven different layers: three convolutional, two sub-sampling and two fully connected layers \cite{LeCun1998}. 
+\end{description}
+
+
+
+After this initial LeNet model, there hasn't been a large focus on Convolutional Neural Networks until recent years: in 2010, the first ImageNet Large Scale Visual Recognition Challenge (ILSVRC) was organised \cite{Russakovsky} and has quickly became a benchmark for the state of the art of CNNs image classification. It consists of two components: the public common dataset and the annual competition to vote the most successful entry every year. The competition tasks are: image classification, single-object localisation and object detection. \cite{Russakovsky} \\
+In these last years of competition different successful architectures have been developed and, winning the challenge, became the state of the art to compare with.
+\clearpage
+\newpage
+
+\vspace*{5mm}
+\begin{description}
+\item[AlexNet (2012)] \cite{Krizhevsky2012} \hfill \\
+The AlexNet won the ILSVRC competition in 2012; this new architecture consists of five convolutional layers and three fully connected layers \textit{(Figure \ref{fig:alexnet})}.\\
+The most distinctive features are: the usage of a \textit{ReLU (REctified Linear Unit)} function ($f(x)=max\{0,x\}$) as neurons' activation function instead of the usual $f(x)=tanh(x)$ to improve the training speed; \textit{multiple GPUs} working on two parallel pipelines and communicating only on certain levels, as seen in figure \ref{fig:alexnet}; \textit{local response normalisation}, consisting in normalising the feature outputs with ones in different feature maps to maximise the sensitivity with high inputs and \textit{overlapping pooling}, to reduce the overfitting \cite{Krizhevsky2012} %(\textit{overfitting} is a term to express a poor generalisation capacity of the network) \\
+
+\vspace*{7mm}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\linewidth]{AlexNet}
+  \caption{Architecture of AlexNet \cite{Krizhevsky2012}}
+  \label{fig:alexnet}
+\end{figure}
+\clearpage
+\newpage
+
+%\begin{figure}[H]
+%  \centering
+%  \includegraphics[width=0.8\linewidth]{Nin}
+%  \caption{NIN (Network In Network) \cite{Lin2013}}
+%  \label{fig:nin}
+%\end{figure}
+
+\vspace*{5mm}
+\item[NIN: Network In Network (2013)] \cite{Lin2013} \hfill \\ 
+To overcome the poorly abstraction capacity of traditional CNNs, a research team from Singapore came up with the idea to use a more potent non-linear function approximator such as a \textbf{multilayer perceptron} \textit{(Figure \ref{fig:nin})}: instead of using linear filters followed by a non-linear activation function to scan the input, they proposed a micro neural network with more complex structure to abstract the data within the receptive field. \cite{Lin2013}. Each layer still outputs a feature map, but since the multilayer perceptron is used as activation function, there is no need of fully connected layers. \\ The NIN output is the spatial average of the feature maps: this prevents overfitting and is also more interpretable \cite{Lin2013}, as feature maps already contain a discriminative feature classification based on the micro neural network weights. \\
+
+\vspace*{5mm}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\linewidth]{Nin}
+  \caption{NIN (Network In Network) \cite{Lin2013}}
+  \label{fig:nin}
+\end{figure}
+\clearpage
+\newpage
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\linewidth]{VGG.png}
+  \caption{Architecture of VGG-net \cite{VGG}}
+  \label{fig:vggnet}
+\end{figure}
+
+\item[VGG-net (2014)] \cite{Simonyan2015} \hfill \\
+The VGG-net (named after the team that came up with this model, the Oxford's Visual Geometry Group) placed second at the 2014 ILSVRC edition. \\ This model is inspired by the original LeNet-5 \cite{LeCun1998} but instead of having each convolutional layer followed by a sub-sampling layer, it stacks multiple convolutional layer together with a small 3X3 kernel \textit{(Figure \ref{fig:vggnet})}: this reduces the computational cost, but guarantees the same effective receptive field as using a bigger 7X7 kernel.\cite{Simonyan2015} \\
+The VGG-net has five max-pooling layers and three fully-connected layers; to avoid memory consumption, it doesn't have a local response normalisation nor a sub-sampling overlapping. \\
+
+\item[GoogLeNet/Inception (2014)] \cite{Szegedy2015} \hfill \\ 
+The GoogLeNet beat the VGG-net arriving first at the 2014 ILSVRC competition; the revolutionising concept of this model is that, in order to be more accurate and improve the state of the art performance, stacking layers and create bigger models is not a good idea: first, the computational cost rise with increased layers and second, having more coefficients leads to a higher overfitting probability. \\ 
+To solve both issues, the solution is to move from fully connected to sparsely connected architectures: Inception architecture (another name for this network) is based on finding how an optimal local sparse structure in a convolutional vision network can be approximated and covered by readily available dense components, and repeat it spatially.\cite{Szegedy2015}
+This mean that the proposed architecture is composed by the Inception modules \textit{(Figure \ref{fig:blocks} (a))} stacked on top of each other: these modules perform various dimensional convolutions and concatenate the different features into a single output to the next block, resulting in low computational cost and high abstraction capacity.\\
+
+\item[ResNet (2015)] \cite{Wu2017} \hfill \\
+The ResNet won the 2015 ILSVRC, basing its architecture on the VGG-net structure, adding every two convolutional layer an identity shortcut (a residual) \textit{(Figure \ref{fig:blocks} (b))}: using a mathematical approach, let $\mathcal {H}(X)$ be the underlying mapping function to be learned, and let $\mathcal{F}(X)=\mathcal {H}(X) + X $ be another mapping that the stacked nonlinear fit. The original mapping is recast into $\mathcal{F}(X)+X$ because this residual mapping is easier to optimise than the original, unreferenced mapping. \cite{Wu2017} \\
+Changing the underlying mapping function to be learned (adding residual modules to a VGG-net) proved to improve the performance thanks to an easier optimisation problem.
+\end{description}
+
+
+\begin{figure}[H]
+   \centering
+    \begin{subfigure}{0.4\linewidth}
+        \includegraphics[width=\linewidth]{inception_module}
+        \caption{An Inception module} \cite{Szegedy2015}
+    \end{subfigure}
+    \begin{subfigure}{0.4\linewidth}
+        \includegraphics[width=\linewidth]{residual_block}
+        \caption{A residual block} \cite{Wu2017}
+    \end{subfigure}
+   
+  \caption{The new deep neural networks modules}
+  \label{fig:blocks}
+\end{figure}
+
+
+\clearpage
+\newpage
+\section{Automatic body-part recogntion}
+With a widespread use of digital imaging data in hospitals and the rising relevance and efficiency of computer-aided diagnoses , the size of medical image repositories is increasing rapidly: this causes difficulty in managing and querying these large databases leading to the need of automatic medical image retrieval systems. \cite{Qayyum2017} \\
+
+Anatomy recognition in whole-body CT images is challenging due to the low contrast resolution of the low-dose CT image. Many image segmentation methods have been investigated and applied to CT images, but mostly for segmenting pathological regions. These include thresholding, gradient-directed, region growing, clustering, deformable model driven techniques, and graph-based approaches \cite{Wang}: these methods are sensitive to noise and require prior knowledge of fixed features of interest before segmentation. \\
+Most published papers on CT image analysis have focused only on pathological region recognition and not organ anatomy recognition: the development of a robust object localisation/recognition method that works on low-dose CT would constitute an advancement of the state of the art in CT quantitative image analysis.\cite{Wang}
+
+As stated in the introduction, an auto-bodypart recognition algorithm benefits radiological workflow in different aspects; a bodypart-based query in the hospital's PACS could be based on the text information contained in the DICOM header, but, since the header is no exempt from errors  \cite{Yan2016}), an automatic bodypart recognition will enable content-based image retrieval and improve the retrieval precision. \cite{Yan2016} \\ \\
+\textbf{Content based image retrieval} (CBIR) is a computer vision technique that gives a way for searching relevant images in large databases.  \\This search is based on the image features like color, texture and shape or any other features being derived from the image itself. Therefore the performance of a CBIR system mainly depends on these selected features \cite{Qayyum2017}: since convolutional neural networks don't need any fixed features but learn them from the images instead, they can be a better approach for bodypart CBIR.\\
+In fact, traditional methods normally use hand-crafted image classification features; lately, deep learning approaches have been adopted with promising results where CNN are employed to learn deep image features \cite{Yan2018}; furthermore, the rapid adoption of deep learning may be attributed to the availability of machine learning frameworks and libraries to simplify their use. \cite{Lakhani2018} \\ \\
+In this work we demonstrate how, using accessible tools such as Keras (a public CNNs Python high-level library) and a pre-trained Inception network \cite{Lakhani2018}, we were able to build an automatic bodypart recognition algorithm that using manually labelled .png files obtained from both public and private anonymised CT scans in DICOM format, reaches an accuracy that can be compared to the state of the art's. \cite{Qayyum2017} \cite{Yan2016} \cite{Yan2018} \cite{Wang}
+
+%Many image segmentation methods have been investigated and applied to PET/CT images, but mostly for segmenting pathological regions. These include thresholding,5?9 gradient- directed,10 region %growing,11 clustering,12 deformable model driven techniques,13 and graph-based approaches \cite{Wang}
+
+
+\end{document}

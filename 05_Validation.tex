@@ -4,11 +4,11 @@
 \label{capitolo4}
 \thispagestyle{empty}
 
-In this chapter the results obtained from the already described tests \ref{capitolo3} will be observed. Such results will then be analysed and discussed, contestualising them into the project concept and considering their value.
+In this chapter the results obtained from the methods described (Chapter \ref{capitolo3}) will be observed. Such results will then be analysed and discussed, contextualising them into the project concept and considering their value.
 
 \section{Test Setup}
 All the tests have been executed on a machine equipped with an Intel \textbf{i7 3,40GHz} processor, \textbf{16GB} of RAM, running \textbf{CentOS7}: a Linux distribution; no GPU has been put into use.
-Due to time constraints tests are performed only on two differently labeled Datasets, whose preparation has already been fully disclosed\ref{capitolo3}: \textit{Lungs/NotLungs} and \textit{Skull/NotSkull}. Even though the following results are relative only to those sections, this does not affect at all the value of the architecture itslef. As it will later be shown, the obtained results are satisfactory enough to almost assure that the model is able of detecting any kind of anatomic site with very high accuracy results.\\
+Due to time constraints tests are performed only on two differently labeled Datasets, whose preparation has already been fully disclosed (see Chapter \ref{capitolo3}): \textit{Lungs/NotLungs} and \textit{Skull/NotSkull}. Even though the following results are relative only to those sections, this does not affect at all the value of the architecture itself. As it will later be shown, the obtained results are satisfactory enough to almost assure that the model is able of detecting any kind of anatomic site with very high accuracy results.\\
 \vspace{5mm}
 \subsection{Execution Time}
 With a source code entirely written by means of \textit{Python} and datasets with lots of images, long computational times are to be expected. On the aforementioned architecture \textit{"training/testing"} times space within a range of around 30 minutes to 10 hours, being extremely dependant on used MiniDataset dimension and machine's performance. Such a highly time-costing process, though, is one-time only, because once trained the ready model is stored and can then be loaded and extensively used without any kinds of limitation. When the already trained model is used to perform classification on never seen images, a process which will be referred to as \textit{"predicting"}, execution time is estimated at no more than 3 minutes for a 3000 images dataset. Considering how full CT exams rarely have more than 500 images, it is possible to conclude that the expected time for Prediction is even lower, even though most of its computational cost comes from loading the trained model.
@@ -26,10 +26,9 @@ Every table will though have the same attributes, whose description is preventiv
 \end{itemize}
 
 The difference between Validation Accuracy and Prediction Accuracy is of utmost importance: Validation images are seen by the CNN at the end of every step of training, working as a "training field" on which the Net can check its performance and further learn. It is a fundamental step in machine learning, but its results are more than often not valuable as benchmarks. Thus the need of the \textit{"Prediction Set"}: all of the images it contains are never seen by the Network during its training, so the results provided by this step are functional to be defined as benchmarks for the CNN's efficiency.  \\
-Furthermore, as already stated\ref{tab:testsperdata}, for some dataset sizes more than one test has been executed: in such cases the shown value will be the exact \textbf{mean} of all the achieved results.
-
-\subsection{Lungs/NotLungs}
-The following table shows the results coming from the test performed on the Lungs/NotLungs Dataset. The whole dataset is composed of 25.000 images labeled as \textit{"Lungs"} and 75.000 labeled as \textit{"NotLungs"}. As already stated, such a difference in size between the "target" and the "general" sections is to be expected as Lungs, in the considered scenario, compose only a part of the human body. The process which describes how the \textit{Prediction Accuracy}, which can be considered the "final" result, is achieved has already been completely explained.\ref{capitolo3}
+Furthermore, as already stated, for some dataset sizes more than one test has been executed: in such cases the shown value will be the exact \textbf{mean} of all the achieved results.
+\clearpage
+\newpage 
 
 \begin{table}
 \caption{\textit{Lungs/Not Lungs} Results}
@@ -51,17 +50,23 @@ Dataset Size & Train Acc. (\%) & Train Loss & Validation Acc. (\%) & Validation 
 \end{tabular}}
 \end{table}
 
-As it can be seen in the table above \textbf{Training, Validation and Preditcion Accuracy}, almost all proportionally rise with the \textbf{Dataset Size}. \textit{Training Accuracy} is always the highest obtained value, as it has to be expected: The images in the \textit{"Training Set"} are the ones used to learn, if their related accuracy drops low or is unable to rise above a certain treshold \textit{(problematic tresholds are at around 60-80\% on a trial and error basis)} it is a possible sign of \textit{overfitting} which has to be absolutely removed. Another really valuable and noticeable information is the similarity between \textit{Validation Accuracy} and \textit{Prediction Accuracy} in almost every MiniDataset: Usually Validation Accuracy tends to be an overextimation of the CNN's potential as already staded, which is why the \textit{Prediction Accuracy} should be used as a benchmark.\ref{fig:lungacc}\\
-A similar but specular consideration can be done with \textbf{Train and Validation Loss}, which both proportionally decrease as more images are added to the MiniDataset. Even though loss function\ref{sec:loss} should be as low as possible there is no golden standard to compare it to, thus making it an almost sterile parameter for the considered work. The only possible control that can be done on these values is a comparison between \textit{Train Loss} and \textit{Accuracy Loss}, where the first has to always be lower than the latter: if this condition is not satisfied there might be some issues with training images.\ref{fig:lungloss}\\
-Even though \textit{Prediction Accuracy}, the defined benchmark for the architecture, is always really high, never falling below 96\%, there is a considerable gap between the 3.000 images dataset and the 50.000 one. Training the 3.000 dataset on the used machine takes less than 1 hour, whilst training the 50.000 one takes around 10 hours. The difference in time consumption between these MiniDatasets is quite huge, but taking into consideration the fact that is a one-time only cost to sustain and that in the medical field a 2\% difference is extremely important, it is possible to assure that the 50.000 images dataset is the \textbf{best} possible choice between all the considered ones. This also finds confirmation due to the fact that no difference in execution time comes out whilst using the already trained model to only execute predictions.
 
-\begin{figure}[h!b]
+\subsection{Lungs/NotLungs}
+The following table shows the results coming from the test performed on the Lungs/NotLungs Dataset. The whole dataset is composed of 25.000 images labeled as \textit{"Lungs"} and 75.000 labeled as \textit{"NotLungs"}. As already stated, such a difference in size between the "target" and the "general" sections is to be expected as Lungs, in the considered scenario, compose only a part of the human body. The process which describes how the \textit{Prediction Accuracy}, which can be considered the "final" result, is achieved has already been completely explained.(see Chapter \ref{capitolo3})
+
+As it can be seen in Table \ref{tab:LNLres}, \textbf{Training, Validation and Prediction Accuracy} rise proportionally with the \textbf{Dataset Size}. \textit{Training Accuracy} is always the highest obtained value, as it has to be expected: the images in the \textit{"Training Set"} are the ones used to learn, if their related accuracy drops low or is unable to rise above a certain threshold \textit{(problematic thresholds are at around 60-80\% on a trial and error basis)} it is a possible sign of \textit{overfitting} which has to be absolutely removed. Another really valuable and noticeable information is the similarity between \textit{Validation Accuracy} and \textit{Prediction Accuracy} in almost every Dataset used: usually Validation Accuracy tends to be an overestimation of the CNN's potential as already stated, which is why the \textit{Prediction Accuracy} should be used as a benchmark.\\
+\begin{figure}[H]
 	\centering
-	\includegraphics[width=\linewidth]{lungacc.png}
+	\includegraphics[width=0.8\linewidth]{lungacc.png}
 	\caption{\textit{Lungs/NotLungs} Accuracy values}
 	\label{fig:lungacc}
 \end{figure}
 
+Plotting the table result on a graph, further highlights the Training Accuracy to be the highest value and the similarity between Validation and Prediction Accuracy \textit{(Figure \ref{fig:lungacc})} \\
+A similar but specular consideration can be done with \textbf{Train and Validation Loss}, which both proportionally decrease as more images are added to the Dataset used. Even though loss function should be as low as possible there is no golden standard to compare it to, thus making it an almost sterile parameter for the considered work. The only possible control that can be done on these values is a comparison between \textit{Train Loss} and \textit{Accuracy Loss}, where the first has to always be lower than the latter: if this condition is not satisfied there might be some issues with training images.\\
+\vspace{5mm}
+Even though \textit{Prediction Accuracy}, the defined benchmark for the architecture, is always really high, never falling below 96\%, there is a considerable gap between the 3.000 images dataset and the 50.000 one regarding the loss value. \textit{(Figure \ref{fig:lungloss})} \\
+Training the 3.000 dataset on the used machine takes less than 1 hour, whilst training the 50.000 one takes around 10 hours. The difference in time consumption between these MiniDatasets is quite huge, but taking into consideration the fact that is a one-time only cost to sustain and that in the medical field a 2\% difference is extremely important, it is possible to assure that the 50.000 images dataset is the \textbf{best} possible choice between all the considered ones. This also finds confirmation due to the fact that no difference in execution time comes out whilst using the already trained model to only execute predictions.
 
 \begin{figure}[h!b]
 	\centering
@@ -69,9 +74,8 @@ Even though \textit{Prediction Accuracy}, the defined benchmark for the architec
 	\caption{\textit{Lungs/NotLungs} Loss Function values}
 	\label{fig:lungloss}
 \end{figure}
-
-\subsection{Skull/NotSkull}
-The results for this tests come out with the same structure as the ones before. The complete dataset is composed of 11.000 images labeled as \textit{"Skull"} and 89.000 images labeled as \textit{"NotSkull"}. The difference between these two is even bigger than the one observed in the \textit{Lungs/NotLungs} set, due to the disparity in size between skull and lungs, the latter being clearly more dimensionally relevant. The methods used to obtain these are the same as before.\ref{capitolo3}
+\clearpage
+\newpage
 
 \begin{table}
 \caption{\textit{Skull/Not Skull} Results}
@@ -91,50 +95,73 @@ Dataset Size & Train Acc. (\%) & Train Loss & Validation Acc. (\%) & Validation 
 \end{tabular}}
 \end{table}
 
-Exactly as expected, \textit{Skull/NotSkull} follows the same logic as \textit{Lungs/NotLungs}, with \textbf{Train, Validation and Prediction Accuracy} proportionally rising with the number of images in the MiniDataset and \textbf{Train and Validation Loss} decreasing with it. The overall higher accuracy of this test compared with the other one is to be expected and can be easily explained: skulls, in CT scans, are extremely different from other body parts. On the other side lungs, being in the thoracic cage, have a bigger risk of being misinterpreted as other anatomic sites.\ref{fig:ctcomparison} \\
-Even though for most part the results are exceptional and coherent, there are some particular situations which are present in this tests which have to be addressed: First of all the \textit{4000 images MiniDataset}, which not only has the lowest \textit{Training Accuracy} but, more importantly, shows a \textit{Validation Loss} lower than the relative \textit{Train Loss}: due to this only happening in such MiniDataset and not presenting anymore it is possible to appoint it to some error during the setup which does not affect the test as a whole and can be almost completely ignored.\ref{fig:skullloss} It also has to be noticed how the expected \textit{Prediction Accuracy} increase was basically not present in the 4.000 to 10.000 datasets, whilst appearing with a really high (proportionally) augmentation in the 20.000 images dataset.\ref{fig:skullacc} This confirms what was also stated before, so that the one-time huge cost to train a CNN with as much data as possible is repaid by a better accuracy. Even in this different section, indeed, we could confirm the biggest dataset (20.000 images) being the \textbf{best} one. 
+\subsection{Skull/NotSkull}
+The results for this tests come out with the same structure as the ones before. The complete dataset is composed of 11.000 images labeled as \textit{"Skull"} and 89.000 images labeled as \textit{"NotSkull"}. The difference between these two is even bigger than the one observed in the \textit{Lungs/NotLungs} set, due to the disparity in size between skull and lungs, the latter being clearly more dimensionally relevant. The methods used to obtain these are the same as before.
+Once again, \textbf{Train, Validation and Prediction Accuracy} proportionally rise with the number of images in the Dataset used and \textbf{Train and Validation Loss} decrease with it. The overall higher accuracy of this test compared with the other one can be easily explained: skulls, in CT scans, are extremely different from other body parts. On the other side lungs, being in the thoracic cage, have a bigger risk of being misinterpreted as other anatomic sites.\ref{fig:ctcomparison} \\
 
-\begin{figure}[h!b]
+\begin{figure}[H]
 	\centering
-	\includegraphics[width=\linewidth]{ctcomparison.png}
+	\includegraphics[width=0.6\linewidth]{ctcomparison.png}
 	\caption{(A)Skull Section (B)Lungs Section (C)Abdomen Section}
 	\label{fig:ctcomparison}
 \end{figure}
 
-\begin{figure}[h!b]
+%\begin{figure}[h!b]
+%	\centering
+%	\includegraphics[width=\linewidth]{skullacc.png}
+%	\caption{\textit{Skull/NotSkull} Accuracy values}
+%	\label{fig:skullacc}
+%\end{figure}
+\vspace*{1mm}
+Even though for most part the results are exceptional and coherent, there are some particular situations which are present in this tests which have to be addressed: First of all the 4000 images Dataset, not only has the lowest \textit{Training Accuracy} but, more importantly, shows a \textit{Validation Loss} lower than the relative \textit{Train Loss}: due to this only happening in such Dataset and not presenting anymore it is possible to appoint it to some error during the setup which does not affect the test as a whole and can be almost completely ignored. \textit{(Figure \ref{fig:skulloss})} \\ The sudden raise of the validation loss when using more images might be sign of a beginning of model overfitting: considering the astonishing results on prediction set, it would be safe to further increase the Dataset size.
+
+\begin{figure}[H]
 	\centering
-	\includegraphics[width=\linewidth]{skullacc.png}
+	\includegraphics[width=0.8\linewidth]{skullloss.png}
+	\caption{\textit{Skull/NotSkull} Loss Function values}
+	\label{fig:skulloss}
+\end{figure}
+\clearpage
+\newpage
+\vspace*{1mm}
+It also has to be noticed how the expected \textit{Prediction Accuracy} increase was basically not present in the 4.000 to 10.000 datasets, whilst appearing with a relatively high augmentation in the 20.000 images dataset. \textit{(Figure \ref{fig:skullacc})}.\\
+This confirms what was also stated before, so that the one-time huge cost to train a CNN with as much data as possible is repaid by a better accuracy. Even in this different section, indeed, we could confirm the biggest dataset (20.000 images) being the \textbf{best} one. 
+\vspace*{5mm}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\linewidth]{skullacc.png}
 	\caption{\textit{Skull/NotSkull} Accuracy values}
 	\label{fig:skullacc}
 \end{figure}
+\clearpage
+\newpage
 
-
-\begin{figure}[h!b]
-	\centering
-	\includegraphics[width=\linewidth]{skullloss.png}
-	\caption{\textit{Skull/NotSkull} Loss Function values}
-	\label{fig:skullloss}
+\begin{figure}[H]
+   \centering
+    \begin{subfigure}{0.4\linewidth}
+        \includegraphics[width=\linewidth]{lungerror.png}
+        %\caption{Lungs/NotLungs classification error (1)}
+    \end{subfigure}
+    \begin{subfigure}{0.4\linewidth}
+        \includegraphics[width=\linewidth]{lerror.png}
+        %\caption{Lungs/NotLungs classification error (2)}
+    \end{subfigure}
+   
+  \caption{Examples of mistaken classified inputs}
+  \label{fig:err}
 \end{figure}
 
 \section{Errors and Solution}
 Even though the best \textbf{Prediction Accuracies} come out as \textbf{98.6\%} for \textit{Lungs/NotLungs} and an astonishing \textbf{99.9\%} for \textit{Skull/NotSkull}; they're still below the perfect \textit{100\%} mark which would ideally be the target. \\
-A \textit{Python} script is used in order to identify which images are not being correctly identified and to understand the nature of the error. The possibility of the model \textbf{overfitting} (the model is adapting too well to training data and failing to predict further never-seen data\cite{overfitting}) is always present in machine learning and must be avoided at any cost. 
-Focusing on the \textit{"Lungs/NotLungs"} Dataset, which is the one showing more errors, it is possible to identify some images which are labeled as \textit{Lungs} but predicted as \textit{NotLungs}.\ref{fig:lungerror, fig:lungerror2} This is the worst possible error, as it causes for important images belonging to the target section to be completely ignored. What comes out from such an analysis is that all the wrongly predicted images are not \textit{real} errors of the Net rather than labeling mistakes. Most of the time the shoulder blades and trachea sections, which have minimum if no trace at all of lungs in them, are labeled as belonging to the target section whilst they do not.\ref{fig:lungblade} The same might happen with the lower part of lungs, the one confining with the stomach. Thanks to such tests it is possible to assume that the errors are not within the used CNN's but rather during the \textbf{labeling} step. This is to be attributed to inexperience in medical image labeling: labes taken too wide \textit{(i.e. shoulder blades considered as lungs)} or too short \textit{(i.e. lungs' sections closer to the abdomen labeled as not lungs)} end up causing the aforenoticed errors. With images correctly labeled by professional doctors such a problem should not be present at all and it should then be possibile to try and achieve the desired perfect performance.
+A \textit{Python} script is used in order to identify which images are not being correctly identified and to understand the nature of the error. The possibility of the model \textbf{overfitting} is always present in machine learning and must be avoided at any cost. 
+Focusing on the \textit{"Lungs/NotLungs"} Dataset, which is the one showing more errors, it is possible to identify some images which are labeled as \textit{Lungs} but predicted as \textit{NotLungs}. \textit{(Figure \ref{fig:err})}: this would be the worst possible error, as it causes for important images belonging to the target section to be completely ignored, but what comes out from such an analysis is that all the wrongly predicted images are not \textit{real} errors of the model rather than labelling mistakes. \\
+\clearpage
+\newpage
 
-\begin{figure}[h!b]
-	\centering
-	\includegraphics[width=0.6\linewidth]{lungerror.png}
-	\caption{Lungs/NotLungs classification error (1)}
-	\label{fig:lungerror}
-\end{figure}
+Most of the time the shoulder blades and trachea sections, which have minimum if no trace at all of lungs in them, are labeled as belonging to the target section whilst they do not. \textit{(Figure \ref{fig:lungblade})} \\
+The same might happen with the lower part of lungs, the one confining with the stomach. Thanks to such tests it is possible to assume that the errors are not depending on the CNN model used but rather don the \textbf{labelling} step. This is to be attributed to inexperience in medical image labelling: labels taken too wide \textit{(i.e. shoulder blades considered as lungs)} or too short \textit{(i.e. lungs' sections closer to the abdomen labeled as not lungs)} end up causing the aforenoticed errors. With images correctly labeled by professional doctors such a problem should not be present at all and it should then be possibile to try and achieve the desired perfect performance.
 
-\begin{figure}[h!b]
-	\centering
-	\includegraphics[width=0.6\linewidth]{lerror.png}
-	\caption{Lungs/NotLungs classification error (2)}
-	\label{fig:lungerror2}
-\end{figure}
-
+\vspace*{5mm}
 \begin{figure}[h!b]
 	\centering
 	\includegraphics[width=0.6\linewidth]{lblade.png}
@@ -151,11 +178,12 @@ Whilst instead considering \textit{"Traditional Methods"} some parameters have t
 \begin{itemize}
 	\item Color Extraction
 	\item Texture Extraction
-	\item Histogram of Oriented Gradents \textit{(HOG)}
+	\item Histogram of Oriented Gradients \textit{(HOG)}
 \end{itemize}
 As already said, the most promising training set are then classified with usage of \textbf{k-Nearest Neighbour} method: The best obtained result on a testing set with the aforemetioned process comes at 73\%, way lower than any deep-learning method.
 \vspace{5mm}
-\subsection{Conlcusions and Future Works}
-Training via transfer learning an high-performing CNN such as the used \textbf{GoogleNet InceptionV3} proves to be extremely effective on a binary body-part classification task (with less images needed when the two classes are very different from each other \ref{tab:SNSres}), being completely able to compare with other \textit{State of the Art} classifiers. A possible future work could include merging different binary trained models for each desired section \textit{(i.e.: skull/notskull + lungs/notlungs + liver/notliver + legs/notlegs, etc.)}. The resulting multi-structured architecture might prove to outperform the current State of Art, consisting in multi-classifing LeNets.
+\subsection{Conclusions and Future Works}
+Training via transfer learning an high-performing CNN such as the used \textbf{GoogleNet InceptionV3} proves to be extremely effective on a binary body-part classification task (with less images needed when the two classes are very different from each other \ref{tab:SNSres}), being completely able to compare with other \textit{State of the Art} classifiers. A possible future work could include merging different binary trained models for each desired section \textit{(i.e.: Skull/NotSkull + Lungs/NotLungs + Liver/NotLiver + Legs/NotLegs, etc.)}. \\
+The resulting multi-structured architecture might prove to outperform the current State of Art, consisting in multi-classifying LeNets.
 
 \end{document}
