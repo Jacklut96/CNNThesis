@@ -1,0 +1,44 @@
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+\thispagestyle{empty}
+
+The following dissertation contains the documentation of the "Convolutional Neural Networks for Anatomic Site Recognition" project, which aims to provide an effective method to retrieve anatomically relevant images from a complete Computer Tomography (CT) scan of a patient, in order to provide an initialisation step to \textit{"Computer-Aided Diagnosis" (CAD)} methods.
+
+\section{Context and problem definition}
+
+Computer Tomography (CT) is computerized x-ray imaging procedure, during which a narrow x-ray beam rotates around the patient's body, producing signals which are processed by the machine in order to generate cross-sectional images of the body.\cite{U.S.Depa} Such a technique gives back images which are much more detailed than standard x-rays images: even when \textit{Low-dose CT} (CT with lesser amount of x-ray used. Lower amount of radiations but worse contrast ) are used, CT images allow to detect cancer nodules and the likes, which would otherwise be impossible with standard x-rays.\ref{cancerexample} This is why this kind of images and are becoming, as of today, a standard as adiologists'aiding tools in performing diagnosis.\cite{Indicators2017} 
+
+\begin{figure}[h] 
+\centering 
+\includegraphics[width=0.5\textwidth]{cancerexample}
+\caption{An example of how a liver tumor appears in a CT image} 
+\source{http://www.scielo.mec.pt/scielo.php?script\=\ ?sci \_\ arttext&pid \=\ S2341-45452015000400005}
+\label{cancerexample} 
+\vspace{5mm}
+\end{figure}
+
+\vspace{5mm}
+\subsection{DICOM (.dcm) files} %TODO: insert PACS retrieval issues
+Medical images, as well as medical data, have to be standardised in order to be read in the same way by anyone, allowing for repeatable experiments and uniform data. \\
+The \textit{Picture Archiving and Communication System} (PACS) is a medical imaging technology used primarily in healthcare organisations to securely store and digitally transmit electronic images and clinically-relevant reports. The PACS standard is the \textbf{Digital Imaging and Communications in Medicine} (DICOM): this provides a uniform way for communicating and managing medical images informations and related data. \\
+DICOM images are composed by a \textbf{header} which provide all the technical details about the patient, exam procedure, image acquisition, hospital structure, visiting doctor, and a \textbf{.raw image file}. The header also contains information about diagnosis machineries, size of the image, padding values, highest bit of acquisition and the pixel array of the image contained in the file: this allows to implement the right changes via image processing, if needed, to provide different algorithms inputs of the same type with identical characteristics.
+\vspace{5mm}
+\subsection{Computer Aided Detection and Radiomics}
+Whilst performing diagnosis based on Imaging Techniques like the one just now presented, doctors have to analyse every single slice obtained by the patient's exam. Such a process comes out as extremely long and time consuming, also being influenced by possible human mistakes. This is where \textit{Computer Aided Detection (CAD)} comes extremely at hand by providing new methods, faster and more precise, to perform diagnosis based on imaging techniques like Computer Tomography (CT) and Positron Emition Tomography (PET). Where aided by CAD systems, radiologists show less diagnostic errors and false negatives, also being more accurate than a single or even a double radiologist reading,\cite{AlMohammad2017} thus allowing to identify CAD as a possible developing field to improve both timing and accuracy of diagnosis.\\
+\textit{Radiomics}, furthermore, is a medical study field which works on developing algorithms and processes in order to extract quantitative features from medical images, obtaining mineable data which can be analysed and used for decision support.\cite{Gillies2016} The algorithms developed for Radiomics allow to work on very large datasets which contain huge amount of data, extracting information from them. Such informations could refer, for example, to features and characteristics of cancer nodules: shape, position, intensity, texture, wavelet, etc. are all features which can be extracted from medical images and analyzed in order to obtain support in decision making.\cite{Chen2017}\\
+The main issue of CAD approaches in Radiomics is that each different body region needs a specific method of segmentation and feature extraction to be correctly analysed and distinguished\cite{Yan2016}: Therefore, automatizing body-part recognition in CT exams is a critical first step to speed up diagnosis, as it allows for subsequent processes to be executed only on the relative regions of interest, saving on both processing time and cost.\\
+\\
+The aim of this project is thus the developement of an automatic \textbf{Anatomical Site Recognition Method} which is able to find any specific body region with high accuracy and low computational costs. The developed process can either be used as a first step in subsequent algorithms \textit{(i.e. lung cancer detection)} or as a standalone directly by radiologists in order to isolate requested anatomical sites and highly speed up their work.
+
+\section{Proposed solution: Convolutional Neural Networks}
+Convolutional Neural Networks (CNN) are  a powerful computer vision method widely used for recognising objects in images, inspired by animal's visual cortex. In the State of art there is little mention of these architectures being used in body-part recognition\cite{Wang}, even though they can be employed in CAD to analyse the content of the image, speeding up the process and overcoming the presence of human errors and reducing the radiologist work load: the aim of this project, stated beforehand, is to be carried out by using Convolutional Neural Networks. The choice of this method over the established DICOM header could solve a huge problem with the latter, which sometime happens to contain the wrong body-part information \cite{Yan2016}. CNN are also preferable to the fixed features image processing algorithms because they dynamically learn from every input data \textit{(i.e. CT scans)} all the important features needed to correctly identify the anatomic site there portrayed. \\ 
+Our set goal is to create an algorithm which takes as inputs all the images from a full body CT exam of a patient, returning only the desired slices containing the chosen anatomical site to be later analysed. \\ 
+
+%\section{Document Structure}
+%The rest of the document is structured as it follows: in chapter \ref{stateofart} the current state of the art will be analyzed, with a specific focus on used technologies. In chapter \ref{capitolo3} the execution of the proposed solution will be shown in detail whilst in the last chapter, \ref{capitolo4}
+
+\end{document}
+
+%A tumour is an uncontrolled and invasive growth of tissue due to a somatic mutation of the DNA of a cell. This neoplastic cell stops its specific function and starts to clone itself without a limit. The continuous growth produces an agglomerated tissue that does not perform the physiological activity which is useful to the organism to survive: this cancerous tissue replaces competitively the anatomical tissue causing the malfunction of the affected organ. This excessive volume growth seldom vanishes any surgical therapy possibility, which is already prohibitive every time the cancer develops inside inner body organs. \\ When detected in early stages of its growth, a tumour can be treated with chemotherapy and its development can be stopped: the role of radiomics in cancer treatment is \textit{essential}. 
+
+%in clinical research \textit{"whole body CT"} is frequently used as a robust and non-invasive way to provide quantitative information about both diseases and effects of experimental therapeutic operations.\cite{Wang}
